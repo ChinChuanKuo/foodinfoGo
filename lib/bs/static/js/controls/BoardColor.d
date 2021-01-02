@@ -1,0 +1,1 @@
+static/js/controls/BoardColor-BtsCore.cmj : BtsCore.cmi static/js/controls/ObjectFormat-BtsCore.cmj static/js/controls/ObjectFormat-BtsCore.cmi static/js/modules/Storage-BtsCore.cmj static/js/modules/Storage-BtsCore.cmi
