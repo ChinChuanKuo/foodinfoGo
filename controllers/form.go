@@ -5,7 +5,7 @@ import (
 	"foodinfoGo/models"
 	"foodinfoGo/models/form"
 
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type FormController struct {

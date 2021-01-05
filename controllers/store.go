@@ -5,7 +5,7 @@ import (
 	"foodinfoGo/models"
 	"foodinfoGo/models/store"
 
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type StoreController struct {

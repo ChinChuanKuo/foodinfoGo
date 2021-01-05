@@ -5,7 +5,7 @@ import (
 	"foodinfoGo/models"
 	"foodinfoGo/models/resend"
 
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type ResendController struct {

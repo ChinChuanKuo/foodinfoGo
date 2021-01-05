@@ -5,7 +5,7 @@ import (
 	"foodinfoGo/models"
 	"foodinfoGo/models/home"
 
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type MainController struct {
@@ -13,6 +13,7 @@ type MainController struct {
 }
 
 func (this *MainController) Get() {
+	this.Data["Title"] = "beego.me"
 	this.TplName = "index.tpl"
 }
 
