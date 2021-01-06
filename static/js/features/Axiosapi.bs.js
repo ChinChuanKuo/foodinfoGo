@@ -39,7 +39,7 @@ var Form = {
 };
 
 function checkUser(data) {
-  return Axios$1.post("/Login/checkUserData", data);
+  return Axios$1.post("http://localhost:7999/Login/checkUserData", data);
 }
 
 function loginUser(data) {

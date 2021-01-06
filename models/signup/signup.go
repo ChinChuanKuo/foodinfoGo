@@ -36,7 +36,7 @@ func GetSignupUserModels(signupData models.SignupData) *models.StatusModels {
 	if results == 0 {
 		password := appcode.GetEncry256(signupData.Password)
 		signupExec := []interface{}{signupData.Userid, password, signupData.Username, signupData.Birthday, "general"}
-		_, err := o.Raw("insert into foodinfo.siteber (email,password,username,birthday,permissajax) values (?, ?, ?, ?, ?)", signupExec).Exec()
+		_, err := o.Raw("insert into foodinfo.siteber (email,password,username,birthday,permiss) values (?, ?, ?, ?, ?)", signupExec).Exec()
 		if err == nil {
 			return &models.StatusModels{Status: "istrue"}
 		}

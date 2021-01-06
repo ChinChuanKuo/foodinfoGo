@@ -10,7 +10,7 @@ module Form = {
 };
 
 module Login = {
-  let checkUser = data => postData("/Login/checkUserData", data);
+  let checkUser = data => postData("http://localhost:7999/Login/checkUserData", data);
   let loginUser = data => postData("/Login/loginUserData", data);
 };
 

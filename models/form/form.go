@@ -75,7 +75,7 @@ func GetPermissModels(UserData models.UserData) *models.PermissModels {
 	o := orm.NewOrm()
 	var mainRows []orm.Params
 	loadCall := []interface{}{UserData.Userid}
-	results, _ := o.Raw("select p.issearch,p.isinsert,p.ismodify,p.isdelete,p.isexport from foodinfo.siteber as s inner join foodinfo.permission as p on s.permissajax = p.permissajax where s.newid = ?;", loadCall).Values(&mainRows)
+	results, _ := o.Raw("select p.issearch,p.isinsert,p.ismodify,p.isdelete,p.isexport from foodinfo.siteber as s inner join foodinfo.permission as p on s.permiss = p.permiss where s.newid = ?;", loadCall).Values(&mainRows)
 	if results == 0 {
 		return &models.PermissModels{Insert: false, Update: false, Delete: false, Export: false}
 	}
