@@ -7,9 +7,16 @@ open Data;
 open Items;
 open Axiosapi;
 open Storage;
+open AnswerColor;
 open SwitchColor;
 open IconAnimation;
 [%bs.raw {|require('../../../scss/pages/Together/together.scss')|}];
+
+type answeritem = {
+  id: int,
+  value: string,
+  showAnswer: bool,
+};
 
 type item = {
   typeId: int,
@@ -22,6 +29,7 @@ type item = {
   typeValue: string,
   showTypeMenu: bool,
   typeitems: array(optionitem),
+  typeanswitems: array(answeritem),
   phoneId: int,
   showPhone: bool,
   phoneOutValue: string,
@@ -32,16 +40,18 @@ type item = {
   phoneValue: string,
   showPhoneMenu: bool,
   phoneitems: array(optionitem),
-  addressId: int,
-  showAddress: bool,
-  addressOutValue: string,
-  addressChecked: bool,
-  showAddressDrop: bool,
-  showAddressFile: bool,
-  addressTitle: string,
-  addressValue: string,
-  showAddressMenu: bool,
-  addressitems: array(optionitem),
+  phoneanswitems: array(answeritem),
+  addrId: int,
+  showAddr: bool,
+  addrOutValue: string,
+  addrChecked: bool,
+  showAddrDrop: bool,
+  showAddrFile: bool,
+  addrTitle: string,
+  addrValue: string,
+  showAddrMenu: bool,
+  addritems: array(optionitem),
+  addranswitems: array(answeritem),
 };
 
 type state = {
@@ -78,16 +88,22 @@ type action =
   | ChangeItemType(string, int)
   | ShowTypeMenu(int)
   | ClickTypeMenu(string, int)
+  | ClickTypeRadio(int, int)
+  | ClickTypeCheckbox(int, int)
   | ShowPhoneDrop(bool, int)
   | ShowPhoneFile(string, int)
   | ChangeItemPhone(string, int)
   | ShowPhoneMenu(int)
   | ClickPhoneMenu(string, int)
-  | ShowAddressDrop(bool, int)
-  | ShowAddressFile(string, int)
-  | ChangeItemAddress(string, int)
-  | ShowAddressMenu(int)
-  | ClickAddressMenu(string, int)
+  | ClickPhoneRadio(int, int)
+  | ClickPhoneCheckbox(int, int)
+  | ShowAddrDrop(bool, int)
+  | ShowAddrFile(string, int)
+  | ChangeItemAddr(string, int)
+  | ShowAddrMenu(int)
+  | ClickAddrMenu(string, int)
+  | ClickAddrRadio(int, int)
+  | ClickAddrCheckbox(int, int)
   | ActionSnackBar(string, bool);
 
 let reducer = (state, action) =>
@@ -172,6 +188,50 @@ let reducer = (state, action) =>
           state.items,
         ),
     }
+  | ClickTypeRadio(rindex, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) =>
+            index == i
+              ? {
+                ...item,
+                typeanswitems:
+                  Array.mapi(
+                    (ri, answeritem) =>
+                      {
+                        ...answeritem,
+                        showAnswer:
+                          rindex == ri ? !answeritem.showAnswer : false,
+                      },
+                    item.typeanswitems,
+                  ),
+              }
+              : item,
+          state.items,
+        ),
+    }
+  | ClickTypeCheckbox(rindex, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) =>
+            index == i
+              ? {
+                ...item,
+                typeanswitems:
+                  Array.mapi(
+                    (ri, answeritem) =>
+                      rindex == ri
+                        ? {...answeritem, showAnswer: !answeritem.showAnswer}
+                        : answeritem,
+                    item.typeanswitems,
+                  ),
+              }
+              : item,
+          state.items,
+        ),
+    }
   | ShowPhoneDrop(droped, index) => {
       ...state,
       items:
@@ -227,16 +287,7 @@ let reducer = (state, action) =>
           state.items,
         ),
     }
-  | ShowAddressDrop(droped, index) => {
-      ...state,
-      items:
-        Array.mapi(
-          (i, item) =>
-            index == i ? {...item, showAddressDrop: droped} : item,
-          state.items,
-        ),
-    }
-  | ShowAddressFile(value, index) => {
+  | ClickPhoneRadio(rindex, index) => {
       ...state,
       items:
         Array.mapi(
@@ -244,32 +295,22 @@ let reducer = (state, action) =>
             index == i
               ? {
                 ...item,
-                addressValue: value,
-                showAddressFile: !item.showAddressFile,
+                phoneanswitems:
+                  Array.mapi(
+                    (ri, answeritem) =>
+                      {
+                        ...answeritem,
+                        showAnswer:
+                          rindex == ri ? !answeritem.showAnswer : false,
+                      },
+                    item.phoneanswitems,
+                  ),
               }
               : item,
           state.items,
         ),
     }
-  | ChangeItemAddress(value, index) => {
-      ...state,
-      items:
-        Array.mapi(
-          (i, item) => index == i ? {...item, addressValue: value} : item,
-          state.items,
-        ),
-    }
-  | ShowAddressMenu(index) => {
-      ...state,
-      items:
-        Array.mapi(
-          (i, item) =>
-            index == i
-              ? {...item, showAddressMenu: !item.showAddressMenu} : item,
-          state.items,
-        ),
-    }
-  | ClickAddressMenu(value, index) => {
+  | ClickPhoneCheckbox(rindex, index) => {
       ...state,
       items:
         Array.mapi(
@@ -277,8 +318,105 @@ let reducer = (state, action) =>
             index == i
               ? {
                 ...item,
-                addressValue: value,
-                showAddressMenu: !item.showAddressMenu,
+                phoneanswitems:
+                  Array.mapi(
+                    (ri, answeritem) =>
+                      rindex == ri
+                        ? {...answeritem, showAnswer: !answeritem.showAnswer}
+                        : answeritem,
+                    item.phoneanswitems,
+                  ),
+              }
+              : item,
+          state.items,
+        ),
+    }
+  | ShowAddrDrop(droped, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) => index == i ? {...item, showAddrDrop: droped} : item,
+          state.items,
+        ),
+    }
+  | ShowAddrFile(value, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) =>
+            index == i
+              ? {...item, addrValue: value, showAddrFile: !item.showAddrFile}
+              : item,
+          state.items,
+        ),
+    }
+  | ChangeItemAddr(value, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) => index == i ? {...item, addrValue: value} : item,
+          state.items,
+        ),
+    }
+  | ShowAddrMenu(index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) =>
+            index == i ? {...item, showAddrMenu: !item.showAddrMenu} : item,
+          state.items,
+        ),
+    }
+  | ClickAddrMenu(value, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) =>
+            index == i
+              ? {...item, addrValue: value, showAddrMenu: !item.showAddrMenu}
+              : item,
+          state.items,
+        ),
+    }
+  | ClickAddrRadio(rindex, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) =>
+            index == i
+              ? {
+                ...item,
+                addranswitems:
+                  Array.mapi(
+                    (ri, answeritem) =>
+                      {
+                        ...answeritem,
+                        showAnswer:
+                          rindex == ri ? !answeritem.showAnswer : false,
+                      },
+                    item.addranswitems,
+                  ),
+              }
+              : item,
+          state.items,
+        ),
+    }
+  | ClickAddrCheckbox(rindex, index) => {
+      ...state,
+      items:
+        Array.mapi(
+          (i, item) =>
+            index == i
+              ? {
+                ...item,
+                addranswitems:
+                  Array.mapi(
+                    (ri, answeritem) =>
+                      rindex == ri
+                        ? {...answeritem, showAnswer: !answeritem.showAnswer}
+                        : answeritem,
+                    item.addranswitems,
+                  ),
               }
               : item,
           state.items,
@@ -484,6 +622,14 @@ let make = _ => {
   let clickTypeMenu =
     useCallback((value, i) => ClickTypeMenu(value, i) |> dispatch);
 
+  let clickTypeElement =
+    useCallback((value, ri, i) =>
+      switch (value) {
+      | "checkbox" => ClickTypeCheckbox(ri, i) |> dispatch
+      | _ => ClickTypeRadio(ri, i) |> dispatch
+      }
+    );
+
   let upPhoneAJax = (file, i) => {
     let formData = FormData.make();
     FormData.append(formData, "file", file) |> ignore;
@@ -547,7 +693,15 @@ let make = _ => {
   let clickPhoneMenu =
     useCallback((value, i) => ClickPhoneMenu(value, i) |> dispatch);
 
-  let upAddressAJax = (file, i) => {
+  let clickPhoneElement =
+    useCallback((value, ri, i) =>
+      switch (value) {
+      | "checkbox" => ClickPhoneCheckbox(ri, i) |> dispatch
+      | _ => ClickPhoneRadio(ri, i) |> dispatch
+      }
+    );
+
+  let upAddrAJax = (file, i) => {
     let formData = FormData.make();
     FormData.append(formData, "file", file) |> ignore;
     Js.Promise.(
@@ -557,7 +711,7 @@ let make = _ => {
            (
              switch (response##data##status) {
              | "istrue" =>
-               ShowAddressFile(response##data##file, i) |> dispatch;
+               ShowAddrFile(response##data##file, i) |> dispatch;
                ActionShowProgress |> dispatch;
              | _ =>
                response##data##status
@@ -573,42 +727,50 @@ let make = _ => {
     );
   };
 
-  let dragOverAddress =
+  let dragOverAddr =
     useCallback((event, i) => {
       ReactEventRe.Mouse.preventDefault(event);
       ReactEventRe.Mouse.stopPropagation(event);
-      ShowAddressDrop(true, i) |> dispatch;
+      ShowAddrDrop(true, i) |> dispatch;
     });
 
-  let dragLeaveAddress =
+  let dragLeaveAddr =
     useCallback((event, i) => {
       ReactEventRe.Mouse.preventDefault(event);
       ReactEventRe.Mouse.stopPropagation(event);
-      ShowAddressDrop(false, i) |> dispatch;
+      ShowAddrDrop(false, i) |> dispatch;
     });
 
-  let dropItemAddress =
+  let dropItemAddr =
     useCallback((event, value, i) => {
       ReactEventRe.Mouse.preventDefault(event);
       ReactEventRe.Mouse.stopPropagation(event);
       ActionShowProgress |> dispatch;
-      ShowAddressDrop(false, i) |> dispatch;
-      i |> upAddressAJax(value);
+      ShowAddrDrop(false, i) |> dispatch;
+      i |> upAddrAJax(value);
     });
 
-  let uploadItemAddress =
+  let uploadItemAddr =
     useCallback((value, i) => {
       ActionShowProgress |> dispatch;
-      i |> upAddressAJax(value);
+      i |> upAddrAJax(value);
     });
 
-  let changeItemAddress =
-    useCallback((value, i) => ChangeItemAddress(value, i) |> dispatch);
+  let changeItemAddr =
+    useCallback((value, i) => ChangeItemAddr(value, i) |> dispatch);
 
-  let showAddressMenu = useCallback(i => ShowAddressMenu(i) |> dispatch);
+  let showAddrMenu = useCallback(i => ShowAddrMenu(i) |> dispatch);
 
-  let clickAddressMenu =
-    useCallback((value, i) => ClickAddressMenu(value, i) |> dispatch);
+  let clickAddrMenu =
+    useCallback((value, i) => ClickAddrMenu(value, i) |> dispatch);
+
+  let clickAddrElement =
+    useCallback((value, ri, i) =>
+      switch (value) {
+      | "checkbox" => ClickAddrCheckbox(ri, i) |> dispatch
+      | _ => ClickAddrRadio(ri, i) |> dispatch
+      }
+    );
 
   let chooseFile =
     useCallback(_
@@ -798,7 +960,7 @@ let make = _ => {
                              }>
                              {item.typeTitle |> string}
                            </TextFieldStandard>
-                         | "textarea" =>
+                         | "textline" =>
                            <TextFieldStandard
                              labelColor="rgba(255,0,0,0.8)"
                              enterBorderColor="rgba(255,0,0,0.8)"
@@ -814,7 +976,7 @@ let make = _ => {
                              }>
                              {item.typeTitle |> string}
                            </TextFieldStandard>
-                         | "textline" =>
+                         | "textarea" =>
                            <TextFieldMultiline
                              labelColor="rgba(255,0,0,0.8)"
                              enterBorderColor="rgba(255,0,0,0.8)"
@@ -831,7 +993,7 @@ let make = _ => {
                              }>
                              {item.typeTitle |> string}
                            </TextFieldMultiline>
-                         | _ =>
+                         | "droplist" =>
                            <>
                              <SelectStandard
                                width="50"
@@ -897,6 +1059,93 @@ let make = _ => {
                                onClick={_ => i |> showTypeMenu}
                              />
                            </>
+                         | _ =>
+                           <GridContainer
+                             direction="column"
+                             justify="center"
+                             alignItem="stretch">
+                             {item.typeanswitems
+                              |> Array.mapi((ai, answeritem) =>
+                                   <GridItem
+                                     top="0"
+                                     bottom="6"
+                                     left="0"
+                                     right="0"
+                                     xs="auto">
+                                     <GridContainer
+                                       direction="row"
+                                       justify="start"
+                                       alignItem="center">
+                                       <GridItem
+                                         top="0"
+                                         right="0"
+                                         bottom="0"
+                                         left="0"
+                                         xs="no">
+                                         <IconButton
+                                           padding="4"
+                                           disabled={state.showProgress}>
+                                           <IconAction
+                                             animation="leftRight"
+                                             src=radioButtonUncheckedBlack
+                                           />
+                                         </IconButton>
+                                       </GridItem>
+                                       <GridItem
+                                         top="0"
+                                         right="6"
+                                         bottom="0"
+                                         left="0"
+                                         xs="auto">
+                                         <TextFieldStandard
+                                           top="0"
+                                           enterBorderColor={
+                                             answeritem.showAnswer
+                                             |> enterBorder
+                                           }
+                                           downBorderColor={
+                                             answeritem.showAnswer
+                                             |> downBorder
+                                           }
+                                           borderColor={
+                                             answeritem.showAnswer |> border
+                                           }
+                                           placeholder="Option"
+                                           value={answeritem.value}
+                                           disabled=true>
+                                           null
+                                         </TextFieldStandard>
+                                       </GridItem>
+                                       <GridItem
+                                         top="0"
+                                         right="6"
+                                         bottom="0"
+                                         left="0"
+                                         xs="no">
+                                         <IconButton
+                                           padding="4"
+                                           disabled={state.showProgress}
+                                           onClick={_ =>
+                                             i
+                                             |> clickTypeElement(
+                                                  item.typeOutValue,
+                                                  ai,
+                                                )
+                                           }>
+                                           <IconAction
+                                             animation="leftRight"
+                                             src={
+                                               answeritem.showAnswer
+                                                 ? doneSuccessful : errorWarn
+                                             }
+                                           />
+                                         </IconButton>
+                                       </GridItem>
+                                     </GridContainer>
+                                   </GridItem>
+                                 )
+                              |> array}
+                           </GridContainer>
                          };
                        }
                        : null}
@@ -957,7 +1206,7 @@ let make = _ => {
                              }>
                              {item.phoneTitle |> string}
                            </TextFieldStandard>
-                         | "textarea" =>
+                         | "textline" =>
                            <TextFieldStandard
                              labelColor="rgba(255,0,0,0.8)"
                              enterBorderColor="rgba(255,0,0,0.8)"
@@ -973,7 +1222,7 @@ let make = _ => {
                              }>
                              {item.phoneTitle |> string}
                            </TextFieldStandard>
-                         | "textline" =>
+                         | "textarea" =>
                            <TextFieldMultiline
                              labelColor="rgba(255,0,0,0.8)"
                              enterBorderColor="rgba(255,0,0,0.8)"
@@ -990,7 +1239,7 @@ let make = _ => {
                              }>
                              {item.phoneTitle |> string}
                            </TextFieldMultiline>
-                         | _ =>
+                         | "droplist" =>
                            <>
                              <SelectStandard
                                labelColor="rgba(255,0,0,0.8)"
@@ -1055,14 +1304,101 @@ let make = _ => {
                                onClick={_ => i |> showPhoneMenu}
                              />
                            </>
+                         | _ =>
+                           <GridContainer
+                             direction="column"
+                             justify="center"
+                             alignItem="stretch">
+                             {item.phoneanswitems
+                              |> Array.mapi((ai, answeritem) =>
+                                   <GridItem
+                                     top="0"
+                                     bottom="6"
+                                     left="0"
+                                     right="0"
+                                     xs="auto">
+                                     <GridContainer
+                                       direction="row"
+                                       justify="start"
+                                       alignItem="center">
+                                       <GridItem
+                                         top="0"
+                                         right="0"
+                                         bottom="0"
+                                         left="0"
+                                         xs="no">
+                                         <IconButton
+                                           padding="4"
+                                           disabled={state.showProgress}>
+                                           <IconAction
+                                             animation="leftRight"
+                                             src=radioButtonUncheckedBlack
+                                           />
+                                         </IconButton>
+                                       </GridItem>
+                                       <GridItem
+                                         top="0"
+                                         right="6"
+                                         bottom="0"
+                                         left="0"
+                                         xs="auto">
+                                         <TextFieldStandard
+                                           top="0"
+                                           enterBorderColor={
+                                             answeritem.showAnswer
+                                             |> enterBorder
+                                           }
+                                           downBorderColor={
+                                             answeritem.showAnswer
+                                             |> downBorder
+                                           }
+                                           borderColor={
+                                             answeritem.showAnswer |> border
+                                           }
+                                           placeholder="Option"
+                                           value={answeritem.value}
+                                           disabled=true>
+                                           null
+                                         </TextFieldStandard>
+                                       </GridItem>
+                                       <GridItem
+                                         top="0"
+                                         right="6"
+                                         bottom="0"
+                                         left="0"
+                                         xs="no">
+                                         <IconButton
+                                           padding="4"
+                                           disabled={state.showProgress}
+                                           onClick={_ =>
+                                             i
+                                             |> clickPhoneElement(
+                                                  item.phoneOutValue,
+                                                  ai,
+                                                )
+                                           }>
+                                           <IconAction
+                                             animation="leftRight"
+                                             src={
+                                               answeritem.showAnswer
+                                                 ? doneSuccessful : errorWarn
+                                             }
+                                           />
+                                         </IconButton>
+                                       </GridItem>
+                                     </GridContainer>
+                                   </GridItem>
+                                 )
+                              |> array}
+                           </GridContainer>
                          };
                        }
                        : null}
                   </GridItem>
                   <GridItem top="0" right="24" left="24" xs="auto">
-                    {item.showAddress
+                    {item.showAddr
                        ? {
-                         switch (item.addressOutValue) {
+                         switch (item.addrOutValue) {
                          | "label" =>
                            <Typography
                              variant="subtitle2"
@@ -1071,22 +1407,20 @@ let make = _ => {
                                (),
                              )}
                              noWrap=true>
-                             {item.addressValue |> string}
+                             {item.addrValue |> string}
                            </Typography>
                          | "image" =>
                            <ImageUpload
                              webLoad={state.showProgress}
-                             showDrop={item.showAddressDrop}
-                             showFile={item.showAddressFile}
-                             src={item.addressValue}
+                             showDrop={item.showAddrDrop}
+                             showFile={item.showAddrFile}
+                             src={item.addrValue}
                              fileRef
-                             onDragOver={event => i |> dragOverAddress(event)}
-                             onDragLeave={event =>
-                               i |> dragLeaveAddress(event)
-                             }
+                             onDragOver={event => i |> dragOverAddr(event)}
+                             onDragLeave={event => i |> dragLeaveAddr(event)}
                              onDrop={event =>
                                i
-                               |> dropItemAddress(
+                               |> dropItemAddr(
                                     event,
                                     ReactEventRe.Synthetic.nativeEvent(event)##dataTransfer##files[0],
                                   )
@@ -1095,7 +1429,7 @@ let make = _ => {
                              onClick=chooseFile
                              onChange={event =>
                                i
-                               |> uploadItemAddress(
+                               |> uploadItemAddr(
                                     ReactEvent.Form.target(event)##files[0],
                                   )
                              }
@@ -1107,62 +1441,62 @@ let make = _ => {
                              enterBorderColor="rgba(255,0,0,0.8)"
                              downBorderColor="rgba(255,0,0,0.6)"
                              borderColor="rgba(0,0,0,0.2)"
-                             value={item.addressValue}
+                             value={item.addrValue}
                              disabled={state.showProgress}
                              onChange={event =>
                                i
-                               |> changeItemAddress(
+                               |> changeItemAddr(
                                     ReactEvent.Form.target(event)##value,
                                   )
                              }>
-                             {item.addressTitle |> string}
+                             {item.addrTitle |> string}
                            </TextFieldStandard>
-                         | "textarea" =>
+                         | "textline" =>
                            <TextFieldStandard
                              labelColor="rgba(255,0,0,0.8)"
                              enterBorderColor="rgba(255,0,0,0.8)"
                              downBorderColor="rgba(255,0,0,0.6)"
                              borderColor="rgba(0,0,0,0.2)"
-                             value={item.addressValue}
+                             value={item.addrValue}
                              disabled={state.showProgress}
                              onChange={event =>
                                i
-                               |> changeItemAddress(
+                               |> changeItemAddr(
                                     ReactEvent.Form.target(event)##value,
                                   )
                              }>
-                             {item.addressTitle |> string}
+                             {item.addrTitle |> string}
                            </TextFieldStandard>
-                         | "textline" =>
+                         | "textarea" =>
                            <TextFieldMultiline
                              labelColor="rgba(255,0,0,0.8)"
                              enterBorderColor="rgba(255,0,0,0.8)"
                              downBorderColor="rgba(255,0,0,0.6)"
                              borderColor="rgba(0,0,0,0.2)"
                              rows=3
-                             value={item.addressValue}
+                             value={item.addrValue}
                              disabled={state.showProgress}
                              onChange={event =>
                                i
-                               |> changeItemAddress(
+                               |> changeItemAddr(
                                     ReactEvent.Form.target(event)##value,
                                   )
                              }>
-                             {item.addressTitle |> string}
+                             {item.addrTitle |> string}
                            </TextFieldMultiline>
-                         | _ =>
+                         | "droplist" =>
                            <>
                              <SelectStandard
                                labelColor="rgba(255,0,0,0.8)"
-                               tile={item.addressTitle}
+                               tile={item.addrTitle}
                                enterBorderColor="rgba(255,0,0,0.8)"
                                downBorderColor="rgba(255,0,0,0.6)"
                                borderColor="rgba(0,0,0,0.2)"
-                               value={item.addressValue}
+                               value={item.addrValue}
                                disabled={state.showProgress}
-                               onClick={_ => i |> showAddressMenu}>
+                               onClick={_ => i |> showAddrMenu}>
                                ...(
-                                    item.showAddressMenu
+                                    item.showAddrMenu
                                       ? <SelectMenu
                                           top="50%"
                                           transform="translate(0, -50%)"
@@ -1174,7 +1508,7 @@ let make = _ => {
                                           bottomLeft="12"
                                           paddingRight="8"
                                           paddingLeft="8">
-                                          {item.addressitems
+                                          {item.addritems
                                            |> Array.map(addressitem =>
                                                 <MenuItem
                                                   top="0"
@@ -1191,7 +1525,7 @@ let make = _ => {
                                                   bottomLeft="12"
                                                   onClick={_ =>
                                                     i
-                                                    |> clickAddressMenu(
+                                                    |> clickAddrMenu(
                                                          addressitem.value,
                                                        )
                                                   }>
@@ -1203,18 +1537,105 @@ let make = _ => {
                                       : null,
                                     <IconGeneral
                                       animation={
-                                        item.showAddressMenu |> topDownRorate
+                                        item.showAddrMenu |> topDownRorate
                                       }
                                       src=arrowDownBlack
                                     />,
                                   )
                              </SelectStandard>
                              <BackgroundBoard
-                               showBackground={item.showAddressMenu}
+                               showBackground={item.showAddrMenu}
                                backgroundColor="transparent"
-                               onClick={_ => i |> showAddressMenu}
+                               onClick={_ => i |> showAddrMenu}
                              />
                            </>
+                         | _ =>
+                           <GridContainer
+                             direction="column"
+                             justify="center"
+                             alignItem="stretch">
+                             {item.addranswitems
+                              |> Array.mapi((ai, answeritem) =>
+                                   <GridItem
+                                     top="0"
+                                     bottom="6"
+                                     left="0"
+                                     right="0"
+                                     xs="auto">
+                                     <GridContainer
+                                       direction="row"
+                                       justify="start"
+                                       alignItem="center">
+                                       <GridItem
+                                         top="0"
+                                         right="0"
+                                         bottom="0"
+                                         left="0"
+                                         xs="no">
+                                         <IconButton
+                                           padding="4"
+                                           disabled={state.showProgress}>
+                                           <IconAction
+                                             animation="leftRight"
+                                             src=radioButtonUncheckedBlack
+                                           />
+                                         </IconButton>
+                                       </GridItem>
+                                       <GridItem
+                                         top="0"
+                                         right="6"
+                                         bottom="0"
+                                         left="0"
+                                         xs="auto">
+                                         <TextFieldStandard
+                                           top="0"
+                                           enterBorderColor={
+                                             answeritem.showAnswer
+                                             |> enterBorder
+                                           }
+                                           downBorderColor={
+                                             answeritem.showAnswer
+                                             |> downBorder
+                                           }
+                                           borderColor={
+                                             answeritem.showAnswer |> border
+                                           }
+                                           placeholder="Option"
+                                           value={answeritem.value}
+                                           disabled=true>
+                                           null
+                                         </TextFieldStandard>
+                                       </GridItem>
+                                       <GridItem
+                                         top="0"
+                                         right="6"
+                                         bottom="0"
+                                         left="0"
+                                         xs="no">
+                                         <IconButton
+                                           padding="4"
+                                           disabled={state.showProgress}
+                                           onClick={_ =>
+                                             i
+                                             |> clickAddrElement(
+                                                  item.addrOutValue,
+                                                  ai,
+                                                )
+                                           }>
+                                           <IconAction
+                                             animation="leftRight"
+                                             src={
+                                               answeritem.showAnswer
+                                                 ? doneSuccessful : errorWarn
+                                             }
+                                           />
+                                         </IconButton>
+                                       </GridItem>
+                                     </GridContainer>
+                                   </GridItem>
+                                 )
+                              |> array}
+                           </GridContainer>
                          };
                        }
                        : null}

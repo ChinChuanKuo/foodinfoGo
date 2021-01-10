@@ -49,7 +49,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -70,7 +70,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: !state.showCreate,
+                  itemCreate: !state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -91,7 +91,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: !state.showBadge,
                   beforeLoad: true,
@@ -112,7 +112,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -133,7 +133,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -158,7 +158,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: action[1],
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -179,7 +179,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -200,7 +200,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: action[0],
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -221,7 +221,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -242,7 +242,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: !state.beforeLoad,
@@ -263,7 +263,7 @@ function reducer(state, action) {
                   menuPath: action[0],
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -291,7 +291,7 @@ function reducer(state, action) {
                                 };
                         }), state.tabitems),
                   index: index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: state.beforeLoad,
@@ -312,7 +312,7 @@ function reducer(state, action) {
                   menuPath: state.menuPath,
                   tabitems: state.tabitems,
                   index: state.index,
-                  showCreate: state.showCreate,
+                  itemCreate: state.itemCreate,
                   badge: state.badge,
                   showBadge: state.showBadge,
                   beforeLoad: !state.beforeLoad,
@@ -378,7 +378,7 @@ var initialState = {
   menuPath: "/",
   tabitems: initialState_tabitems,
   index: 0,
-  showCreate: false,
+  itemCreate: false,
   badge: "",
   showBadge: false,
   beforeLoad: true,
@@ -552,7 +552,7 @@ function NewBookBoard(Props) {
                 }));
           
         }));
-  var showCreate = React.useCallback((function (param) {
+  var itemCreate = React.useCallback((function (param) {
           return Curry._1(dispatch, /* ShowCreate */1);
         }));
   var createForm = React.useCallback((function (param) {
@@ -793,7 +793,7 @@ function NewBookBoard(Props) {
                                           style: OutSide$BtsCore.butnRight,
                                           padding: "8",
                                           className: "butnToolAction",
-                                          onClick: showCreate,
+                                          onClick: itemCreate,
                                           children: null
                                         }, React.createElement(Tooltip$BtsCore.make, {
                                               location: "bottom",
@@ -806,10 +806,10 @@ function NewBookBoard(Props) {
                                               style: Together$BtsCore.zIndexGrow,
                                               animation: "leftRight",
                                               src: Icons$BtsCore.addBlack
-                                            })), state.showCreate ? React.createElement(NewBookCreate$BtsCore.make, {
+                                            })), state.itemCreate ? React.createElement(NewBookCreate$BtsCore.make, {
                                             maxHeight: maxHeight,
                                             createForm: createForm,
-                                            clickShow: showCreate
+                                            clickShow: itemCreate
                                           }) : null), React.createElement(GridItem$BtsCore.make, {
                                       top: "0",
                                       right: "0",

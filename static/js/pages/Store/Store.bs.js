@@ -22,8 +22,10 @@ import * as MenuItem$BtsCore from "../../material-ui/core/MenuItem/MenuItem.bs.j
 import * as Together$BtsCore from "../../styles/Together/Together.bs.js";
 import * as ReasonReactRouter from "reason-react/src/ReasonReactRouter.js";
 import * as IconAction$BtsCore from "../../material-ui/core/IconStyle/IconAction.bs.js";
+import * as IconButton$BtsCore from "../../material-ui/core/IconButton/IconButton.bs.js";
 import * as SelectMenu$BtsCore from "../../material-ui/core/Menu/SelectMenu.bs.js";
 import * as Typography$BtsCore from "../../material-ui/core/Typography/Typography.bs.js";
+import * as AnswerColor$BtsCore from "../../controls/AnswerColor.bs.js";
 import * as IconGeneral$BtsCore from "../../material-ui/core/IconStyle/IconGeneral.bs.js";
 import * as ImageUpload$BtsCore from "../../example/Uploads/ImageUpload.bs.js";
 import * as NewFacetube$BtsCore from "../../example/Facebook/NewFacetube.bs.js";
@@ -364,9 +366,9 @@ function reducer(state, action) {
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ShowPhoneDrop */11 :
+      case /* ClickTypeRadio */11 :
           var index$6 = action[1];
-          var droped$1 = action[0];
+          var rindex = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -386,15 +388,21 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showPhoneDrop = droped$1;
+                          newrecord.typeanswitems = $$Array.mapi((function (ri, answeritem) {
+                                  return {
+                                          id: answeritem.id,
+                                          value: answeritem.value,
+                                          showAnswer: rindex === ri ? !answeritem.showAnswer : false
+                                        };
+                                }), item.typeanswitems);
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ShowPhoneFile */12 :
+      case /* ClickTypeCheckbox */12 :
           var index$7 = action[1];
-          var value$3 = action[0];
+          var rindex$1 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -414,16 +422,25 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.phoneValue = value$3;
-                          newrecord.showPhoneFile = !item.showPhoneFile;
+                          newrecord.typeanswitems = $$Array.mapi((function (ri, answeritem) {
+                                  if (rindex$1 === ri) {
+                                    return {
+                                            id: answeritem.id,
+                                            value: answeritem.value,
+                                            showAnswer: !answeritem.showAnswer
+                                          };
+                                  } else {
+                                    return answeritem;
+                                  }
+                                }), item.typeanswitems);
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ChangeItemPhone */13 :
+      case /* ShowPhoneDrop */13 :
           var index$8 = action[1];
-          var value$4 = action[0];
+          var droped$1 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -443,14 +460,15 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.phoneValue = value$4;
+                          newrecord.showPhoneDrop = droped$1;
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ShowPhoneMenu */14 :
-          var index$9 = action[0];
+      case /* ShowPhoneFile */14 :
+          var index$9 = action[1];
+          var value$3 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -470,15 +488,16 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showPhoneMenu = !item.showPhoneMenu;
+                          newrecord.phoneValue = value$3;
+                          newrecord.showPhoneFile = !item.showPhoneFile;
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ClickPhoneMenu */15 :
+      case /* ChangeItemPhone */15 :
           var index$10 = action[1];
-          var value$5 = action[0];
+          var value$4 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -498,16 +517,14 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showPhoneMenu = !item.showPhoneMenu;
-                          newrecord.phoneValue = value$5;
+                          newrecord.phoneValue = value$4;
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ShowAddressDrop */16 :
-          var index$11 = action[1];
-          var droped$2 = action[0];
+      case /* ShowPhoneMenu */16 :
+          var index$11 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -527,15 +544,15 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showAddressDrop = droped$2;
+                          newrecord.showPhoneMenu = !item.showPhoneMenu;
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ShowAddressFile */17 :
+      case /* ClickPhoneMenu */17 :
           var index$12 = action[1];
-          var value$6 = action[0];
+          var value$5 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -555,16 +572,16 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.addressValue = value$6;
-                          newrecord.showAddressFile = !item.showAddressFile;
+                          newrecord.showPhoneMenu = !item.showPhoneMenu;
+                          newrecord.phoneValue = value$5;
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ChangeItemAddress */18 :
+      case /* ClickPhoneRadio */18 :
           var index$13 = action[1];
-          var value$7 = action[0];
+          var rindex$2 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -584,14 +601,21 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.addressValue = value$7;
+                          newrecord.phoneanswitems = $$Array.mapi((function (ri, answeritem) {
+                                  return {
+                                          id: answeritem.id,
+                                          value: answeritem.value,
+                                          showAnswer: rindex$2 === ri ? !answeritem.showAnswer : false
+                                        };
+                                }), item.phoneanswitems);
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ShowAddressMenu */19 :
-          var index$14 = action[0];
+      case /* ClickPhoneCheckbox */19 :
+          var index$14 = action[1];
+          var rindex$3 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -611,15 +635,25 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showAddressMenu = !item.showAddressMenu;
+                          newrecord.phoneanswitems = $$Array.mapi((function (ri, answeritem) {
+                                  if (rindex$3 === ri) {
+                                    return {
+                                            id: answeritem.id,
+                                            value: answeritem.value,
+                                            showAnswer: !answeritem.showAnswer
+                                          };
+                                  } else {
+                                    return answeritem;
+                                  }
+                                }), item.phoneanswitems);
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ClickAddressMenu */20 :
+      case /* ShowAddrDrop */20 :
           var index$15 = action[1];
-          var value$8 = action[0];
+          var droped$2 = action[0];
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -639,14 +673,198 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showAddressMenu = !item.showAddressMenu;
-                          newrecord.addressValue = value$8;
+                          newrecord.showAddrDrop = droped$2;
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
                 };
-      case /* ActionSnackBar */21 :
+      case /* ShowAddrFile */21 :
+          var index$16 = action[1];
+          var value$6 = action[0];
+          return {
+                  formLoad: state.formLoad,
+                  showProgress: state.showProgress,
+                  error: state.error,
+                  insert: state.insert,
+                  update: state.update,
+                  delete: state.delete,
+                  export: state.export,
+                  formId: state.formId,
+                  tile: state.tile,
+                  desc: state.desc,
+                  checked: state.checked,
+                  tabitems: state.tabitems,
+                  index: state.index,
+                  items: $$Array.mapi((function (i, item) {
+                          if (index$16 !== i) {
+                            return item;
+                          }
+                          var newrecord = Caml_obj.caml_obj_dup(item);
+                          newrecord.addrValue = value$6;
+                          newrecord.showAddrFile = !item.showAddrFile;
+                          return newrecord;
+                        }), state.items),
+                  showYoutube: state.showYoutube,
+                  youtubeText: state.youtubeText
+                };
+      case /* ChangeItemAddr */22 :
+          var index$17 = action[1];
+          var value$7 = action[0];
+          return {
+                  formLoad: state.formLoad,
+                  showProgress: state.showProgress,
+                  error: state.error,
+                  insert: state.insert,
+                  update: state.update,
+                  delete: state.delete,
+                  export: state.export,
+                  formId: state.formId,
+                  tile: state.tile,
+                  desc: state.desc,
+                  checked: state.checked,
+                  tabitems: state.tabitems,
+                  index: state.index,
+                  items: $$Array.mapi((function (i, item) {
+                          if (index$17 !== i) {
+                            return item;
+                          }
+                          var newrecord = Caml_obj.caml_obj_dup(item);
+                          newrecord.addrValue = value$7;
+                          return newrecord;
+                        }), state.items),
+                  showYoutube: state.showYoutube,
+                  youtubeText: state.youtubeText
+                };
+      case /* ShowAddrMenu */23 :
+          var index$18 = action[0];
+          return {
+                  formLoad: state.formLoad,
+                  showProgress: state.showProgress,
+                  error: state.error,
+                  insert: state.insert,
+                  update: state.update,
+                  delete: state.delete,
+                  export: state.export,
+                  formId: state.formId,
+                  tile: state.tile,
+                  desc: state.desc,
+                  checked: state.checked,
+                  tabitems: state.tabitems,
+                  index: state.index,
+                  items: $$Array.mapi((function (i, item) {
+                          if (index$18 !== i) {
+                            return item;
+                          }
+                          var newrecord = Caml_obj.caml_obj_dup(item);
+                          newrecord.showAddrMenu = !item.showAddrMenu;
+                          return newrecord;
+                        }), state.items),
+                  showYoutube: state.showYoutube,
+                  youtubeText: state.youtubeText
+                };
+      case /* ClickAddrMenu */24 :
+          var index$19 = action[1];
+          var value$8 = action[0];
+          return {
+                  formLoad: state.formLoad,
+                  showProgress: state.showProgress,
+                  error: state.error,
+                  insert: state.insert,
+                  update: state.update,
+                  delete: state.delete,
+                  export: state.export,
+                  formId: state.formId,
+                  tile: state.tile,
+                  desc: state.desc,
+                  checked: state.checked,
+                  tabitems: state.tabitems,
+                  index: state.index,
+                  items: $$Array.mapi((function (i, item) {
+                          if (index$19 !== i) {
+                            return item;
+                          }
+                          var newrecord = Caml_obj.caml_obj_dup(item);
+                          newrecord.showAddrMenu = !item.showAddrMenu;
+                          newrecord.addrValue = value$8;
+                          return newrecord;
+                        }), state.items),
+                  showYoutube: state.showYoutube,
+                  youtubeText: state.youtubeText
+                };
+      case /* ClickAddrRadio */25 :
+          var index$20 = action[1];
+          var rindex$4 = action[0];
+          return {
+                  formLoad: state.formLoad,
+                  showProgress: state.showProgress,
+                  error: state.error,
+                  insert: state.insert,
+                  update: state.update,
+                  delete: state.delete,
+                  export: state.export,
+                  formId: state.formId,
+                  tile: state.tile,
+                  desc: state.desc,
+                  checked: state.checked,
+                  tabitems: state.tabitems,
+                  index: state.index,
+                  items: $$Array.mapi((function (i, item) {
+                          if (index$20 !== i) {
+                            return item;
+                          }
+                          var newrecord = Caml_obj.caml_obj_dup(item);
+                          newrecord.addranswitems = $$Array.mapi((function (ri, answeritem) {
+                                  return {
+                                          id: answeritem.id,
+                                          value: answeritem.value,
+                                          showAnswer: rindex$4 === ri ? !answeritem.showAnswer : false
+                                        };
+                                }), item.addranswitems);
+                          return newrecord;
+                        }), state.items),
+                  showYoutube: state.showYoutube,
+                  youtubeText: state.youtubeText
+                };
+      case /* ClickAddrCheckbox */26 :
+          var index$21 = action[1];
+          var rindex$5 = action[0];
+          return {
+                  formLoad: state.formLoad,
+                  showProgress: state.showProgress,
+                  error: state.error,
+                  insert: state.insert,
+                  update: state.update,
+                  delete: state.delete,
+                  export: state.export,
+                  formId: state.formId,
+                  tile: state.tile,
+                  desc: state.desc,
+                  checked: state.checked,
+                  tabitems: state.tabitems,
+                  index: state.index,
+                  items: $$Array.mapi((function (i, item) {
+                          if (index$21 !== i) {
+                            return item;
+                          }
+                          var newrecord = Caml_obj.caml_obj_dup(item);
+                          newrecord.addranswitems = $$Array.mapi((function (ri, answeritem) {
+                                  if (rindex$5 === ri) {
+                                    return {
+                                            id: answeritem.id,
+                                            value: answeritem.value,
+                                            showAnswer: !answeritem.showAnswer
+                                          };
+                                  } else {
+                                    return answeritem;
+                                  }
+                                }), item.addranswitems);
+                          return newrecord;
+                        }), state.items),
+                  showYoutube: state.showYoutube,
+                  youtubeText: state.youtubeText
+                };
+      case /* ActionSnackBar */27 :
           return {
                   formLoad: state.formLoad,
                   showProgress: state.showProgress,
@@ -727,12 +945,12 @@ function Store(Props) {
   var state = match[0];
   var fileRef = React.useRef(null);
   var barShowRestoreAction = function (youtubeText) {
-    Curry._1(dispatch, /* ActionSnackBar */Block.__(21, [
+    Curry._1(dispatch, /* ActionSnackBar */Block.__(27, [
             youtubeText,
             true
           ]));
     setTimeout((function (param) {
-            return Curry._1(dispatch, /* ActionSnackBar */Block.__(21, [
+            return Curry._1(dispatch, /* ActionSnackBar */Block.__(27, [
                           "",
                           false
                         ]));
@@ -891,6 +1109,21 @@ function Store(Props) {
                           ]));
             });
         }));
+  var clickTypeElement = React.useCallback((function (value) {
+          return (function (ri, i) {
+              if (value === "checkbox") {
+                return Curry._1(dispatch, /* ClickTypeCheckbox */Block.__(12, [
+                              ri,
+                              i
+                            ]));
+              } else {
+                return Curry._1(dispatch, /* ClickTypeRadio */Block.__(11, [
+                              ri,
+                              i
+                            ]));
+              }
+            });
+        }));
   var upPhoneAJax = function (file, i) {
     var formData = new FormData();
     formData.append("file", file);
@@ -898,7 +1131,7 @@ function Store(Props) {
               var match = response.data.status;
               var tmp;
               if (match === "istrue") {
-                Curry._1(dispatch, /* ShowPhoneFile */Block.__(12, [
+                Curry._1(dispatch, /* ShowPhoneFile */Block.__(14, [
                         response.data.file,
                         i
                       ]));
@@ -917,7 +1150,7 @@ function Store(Props) {
           return (function (i) {
               $$event.preventDefault();
               $$event.stopPropagation();
-              return Curry._1(dispatch, /* ShowPhoneDrop */Block.__(11, [
+              return Curry._1(dispatch, /* ShowPhoneDrop */Block.__(13, [
                             true,
                             i
                           ]));
@@ -927,7 +1160,7 @@ function Store(Props) {
           return (function (i) {
               $$event.preventDefault();
               $$event.stopPropagation();
-              return Curry._1(dispatch, /* ShowPhoneDrop */Block.__(11, [
+              return Curry._1(dispatch, /* ShowPhoneDrop */Block.__(13, [
                             false,
                             i
                           ]));
@@ -938,7 +1171,7 @@ function Store(Props) {
               $$event.preventDefault();
               $$event.stopPropagation();
               Curry._1(dispatch, /* ActionShowProgress */1);
-              Curry._1(dispatch, /* ShowPhoneDrop */Block.__(11, [
+              Curry._1(dispatch, /* ShowPhoneDrop */Block.__(13, [
                       false,
                       i
                     ]));
@@ -953,31 +1186,46 @@ function Store(Props) {
         }));
   var changeItemPhone = React.useCallback((function (value) {
           return (function (i) {
-              return Curry._1(dispatch, /* ChangeItemPhone */Block.__(13, [
+              return Curry._1(dispatch, /* ChangeItemPhone */Block.__(15, [
                             value,
                             i
                           ]));
             });
         }));
   var showPhoneMenu = React.useCallback((function (i) {
-          return Curry._1(dispatch, /* ShowPhoneMenu */Block.__(14, [i]));
+          return Curry._1(dispatch, /* ShowPhoneMenu */Block.__(16, [i]));
         }));
   var clickPhoneMenu = React.useCallback((function (value) {
           return (function (i) {
-              return Curry._1(dispatch, /* ClickPhoneMenu */Block.__(15, [
+              return Curry._1(dispatch, /* ClickPhoneMenu */Block.__(17, [
                             value,
                             i
                           ]));
             });
         }));
-  var upAddressAJax = function (file, i) {
+  var clickPhoneElement = React.useCallback((function (value) {
+          return (function (ri, i) {
+              if (value === "checkbox") {
+                return Curry._1(dispatch, /* ClickPhoneCheckbox */Block.__(19, [
+                              ri,
+                              i
+                            ]));
+              } else {
+                return Curry._1(dispatch, /* ClickPhoneRadio */Block.__(18, [
+                              ri,
+                              i
+                            ]));
+              }
+            });
+        }));
+  var upAddrAJax = function (file, i) {
     var formData = new FormData();
     formData.append("file", file);
     Axiosapi$BtsCore.Files.upload(formData).then((function (response) {
               var match = response.data.status;
               var tmp;
               if (match === "istrue") {
-                Curry._1(dispatch, /* ShowAddressFile */Block.__(17, [
+                Curry._1(dispatch, /* ShowAddrFile */Block.__(21, [
                         response.data.file,
                         i
                       ]));
@@ -992,61 +1240,76 @@ function Store(Props) {
           }));
     
   };
-  var dragOverAddress = React.useCallback((function ($$event) {
+  var dragOverAddr = React.useCallback((function ($$event) {
           return (function (i) {
               $$event.preventDefault();
               $$event.stopPropagation();
-              return Curry._1(dispatch, /* ShowAddressDrop */Block.__(16, [
+              return Curry._1(dispatch, /* ShowAddrDrop */Block.__(20, [
                             true,
                             i
                           ]));
             });
         }));
-  var dragLeaveAddress = React.useCallback((function ($$event) {
+  var dragLeaveAddr = React.useCallback((function ($$event) {
           return (function (i) {
               $$event.preventDefault();
               $$event.stopPropagation();
-              return Curry._1(dispatch, /* ShowAddressDrop */Block.__(16, [
+              return Curry._1(dispatch, /* ShowAddrDrop */Block.__(20, [
                             false,
                             i
                           ]));
             });
         }));
-  var dropItemAddress = React.useCallback((function ($$event) {
+  var dropItemAddr = React.useCallback((function ($$event) {
           return (function (value, i) {
               $$event.preventDefault();
               $$event.stopPropagation();
               Curry._1(dispatch, /* ActionShowProgress */1);
-              Curry._1(dispatch, /* ShowAddressDrop */Block.__(16, [
+              Curry._1(dispatch, /* ShowAddrDrop */Block.__(20, [
                       false,
                       i
                     ]));
-              return upAddressAJax(value, i);
+              return upAddrAJax(value, i);
             });
         }));
-  var uploadItemAddress = React.useCallback((function (value) {
+  var uploadItemAddr = React.useCallback((function (value) {
           return (function (i) {
               Curry._1(dispatch, /* ActionShowProgress */1);
-              return upAddressAJax(value, i);
+              return upAddrAJax(value, i);
             });
         }));
-  var changeItemAddress = React.useCallback((function (value) {
+  var changeItemAddr = React.useCallback((function (value) {
           return (function (i) {
-              return Curry._1(dispatch, /* ChangeItemAddress */Block.__(18, [
+              return Curry._1(dispatch, /* ChangeItemAddr */Block.__(22, [
                             value,
                             i
                           ]));
             });
         }));
-  var showAddressMenu = React.useCallback((function (i) {
-          return Curry._1(dispatch, /* ShowAddressMenu */Block.__(19, [i]));
+  var showAddrMenu = React.useCallback((function (i) {
+          return Curry._1(dispatch, /* ShowAddrMenu */Block.__(23, [i]));
         }));
-  var clickAddressMenu = React.useCallback((function (value) {
+  var clickAddrMenu = React.useCallback((function (value) {
           return (function (i) {
-              return Curry._1(dispatch, /* ClickAddressMenu */Block.__(20, [
+              return Curry._1(dispatch, /* ClickAddrMenu */Block.__(24, [
                             value,
                             i
                           ]));
+            });
+        }));
+  var clickAddrElement = React.useCallback((function (value) {
+          return (function (ri, i) {
+              if (value === "checkbox") {
+                return Curry._1(dispatch, /* ClickAddrCheckbox */Block.__(26, [
+                              ri,
+                              i
+                            ]));
+              } else {
+                return Curry._1(dispatch, /* ClickAddrRadio */Block.__(25, [
+                              ri,
+                              i
+                            ]));
+              }
             });
         }));
   var chooseFile = React.useCallback((function (param) {
@@ -1203,6 +1466,62 @@ function Store(Props) {
                                     if (item.showType) {
                                       var match = item.typeOutValue;
                                       switch (match) {
+                                        case "droplist" :
+                                            tmp = React.createElement(React.Fragment, undefined, React.createElement(SelectStandard$BtsCore.make, {
+                                                      width: "50",
+                                                      labelColor: "rgba(255,0,0,0.8)",
+                                                      tile: item.typeTitle,
+                                                      enterBorderColor: "rgba(255,0,0,0.8)",
+                                                      downBorderColor: "rgba(255,0,0,0.6)",
+                                                      borderColor: "rgba(0,0,0,0.2)",
+                                                      value: item.typeValue,
+                                                      disabled: state.showProgress,
+                                                      onClick: (function (param) {
+                                                          return Curry._1(showTypeMenu, i);
+                                                        }),
+                                                      children: /* tuple */[
+                                                        item.showTypeMenu ? React.createElement(SelectMenu$BtsCore.make, {
+                                                                top: "50%",
+                                                                transform: "translate(0, -50%)",
+                                                                maxHeight: "280",
+                                                                minHeight: "0",
+                                                                topLeft: "12",
+                                                                topRight: "12",
+                                                                bottomRight: "12",
+                                                                bottomLeft: "12",
+                                                                paddingRight: "8",
+                                                                paddingLeft: "8",
+                                                                children: $$Array.map((function (typeitem) {
+                                                                        return React.createElement(MenuItem$BtsCore.make, {
+                                                                                    top: "0",
+                                                                                    right: "8",
+                                                                                    bottom: "0",
+                                                                                    left: "8",
+                                                                                    disablePadding: typeitem.optionPadding,
+                                                                                    topLeft: "12",
+                                                                                    topRight: "12",
+                                                                                    bottomRight: "12",
+                                                                                    bottomLeft: "12",
+                                                                                    onClick: (function (param) {
+                                                                                        return Curry._2(clickTypeMenu, typeitem.value, i);
+                                                                                      }),
+                                                                                    children: typeitem.value
+                                                                                  });
+                                                                      }), item.typeitems)
+                                                              }) : null,
+                                                        React.createElement(IconGeneral$BtsCore.make, {
+                                                              animation: IconAnimation$BtsCore.topDownRorate(item.showTypeMenu),
+                                                              src: Icons$BtsCore.arrowDownBlack
+                                                            })
+                                                      ]
+                                                    }), React.createElement(BackgroundBoard$BtsCore.make, {
+                                                      showBackground: item.showTypeMenu,
+                                                      backgroundColor: "transparent",
+                                                      onClick: (function (param) {
+                                                          return Curry._1(showTypeMenu, i);
+                                                        })
+                                                    }));
+                                            break;
                                         case "image" :
                                             tmp = React.createElement(ImageUpload$BtsCore.make, {
                                                   webLoad: state.showProgress,
@@ -1252,20 +1571,6 @@ function Store(Props) {
                                                 });
                                             break;
                                         case "textarea" :
-                                            tmp = React.createElement(TextFieldStandard$BtsCore.make, {
-                                                  labelColor: "rgba(255,0,0,0.8)",
-                                                  enterBorderColor: "rgba(255,0,0,0.8)",
-                                                  downBorderColor: "rgba(255,0,0,0.6)",
-                                                  borderColor: "rgba(0,0,0,0.2)",
-                                                  value: item.typeValue,
-                                                  disabled: state.showProgress,
-                                                  onChange: (function ($$event) {
-                                                      return Curry._2(changeItemType, $$event.target.value, i);
-                                                    }),
-                                                  children: item.typeTitle
-                                                });
-                                            break;
-                                        case "textline" :
                                             tmp = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                   labelColor: "rgba(255,0,0,0.8)",
                                                   enterBorderColor: "rgba(255,0,0,0.8)",
@@ -1280,61 +1585,88 @@ function Store(Props) {
                                                   children: item.typeTitle
                                                 });
                                             break;
+                                        case "textline" :
+                                            tmp = React.createElement(TextFieldStandard$BtsCore.make, {
+                                                  labelColor: "rgba(255,0,0,0.8)",
+                                                  enterBorderColor: "rgba(255,0,0,0.8)",
+                                                  downBorderColor: "rgba(255,0,0,0.6)",
+                                                  borderColor: "rgba(0,0,0,0.2)",
+                                                  value: item.typeValue,
+                                                  disabled: state.showProgress,
+                                                  onChange: (function ($$event) {
+                                                      return Curry._2(changeItemType, $$event.target.value, i);
+                                                    }),
+                                                  children: item.typeTitle
+                                                });
+                                            break;
                                         default:
-                                          tmp = React.createElement(React.Fragment, undefined, React.createElement(SelectStandard$BtsCore.make, {
-                                                    width: "50",
-                                                    labelColor: "rgba(255,0,0,0.8)",
-                                                    tile: item.typeTitle,
-                                                    enterBorderColor: "rgba(255,0,0,0.8)",
-                                                    downBorderColor: "rgba(255,0,0,0.6)",
-                                                    borderColor: "rgba(0,0,0,0.2)",
-                                                    value: item.typeValue,
-                                                    disabled: state.showProgress,
-                                                    onClick: (function (param) {
-                                                        return Curry._1(showTypeMenu, i);
-                                                      }),
-                                                    children: /* tuple */[
-                                                      item.showTypeMenu ? React.createElement(SelectMenu$BtsCore.make, {
-                                                              top: "50%",
-                                                              transform: "translate(0, -50%)",
-                                                              maxHeight: "280",
-                                                              minHeight: "0",
-                                                              topLeft: "12",
-                                                              topRight: "12",
-                                                              bottomRight: "12",
-                                                              bottomLeft: "12",
-                                                              paddingRight: "8",
-                                                              paddingLeft: "8",
-                                                              children: $$Array.map((function (typeitem) {
-                                                                      return React.createElement(MenuItem$BtsCore.make, {
-                                                                                  top: "0",
-                                                                                  right: "8",
-                                                                                  bottom: "0",
-                                                                                  left: "8",
-                                                                                  disablePadding: typeitem.optionPadding,
-                                                                                  topLeft: "12",
-                                                                                  topRight: "12",
-                                                                                  bottomRight: "12",
-                                                                                  bottomLeft: "12",
-                                                                                  onClick: (function (param) {
-                                                                                      return Curry._2(clickTypeMenu, typeitem.value, i);
-                                                                                    }),
-                                                                                  children: typeitem.value
-                                                                                });
-                                                                    }), item.typeitems)
-                                                            }) : null,
-                                                      React.createElement(IconGeneral$BtsCore.make, {
-                                                            animation: IconAnimation$BtsCore.topDownRorate(item.showTypeMenu),
-                                                            src: Icons$BtsCore.arrowDownBlack
-                                                          })
-                                                    ]
-                                                  }), React.createElement(BackgroundBoard$BtsCore.make, {
-                                                    showBackground: item.showTypeMenu,
-                                                    backgroundColor: "transparent",
-                                                    onClick: (function (param) {
-                                                        return Curry._1(showTypeMenu, i);
-                                                      })
-                                                  }));
+                                          tmp = React.createElement(GridContainer$BtsCore.make, {
+                                                direction: "column",
+                                                justify: "center",
+                                                alignItem: "stretch",
+                                                children: $$Array.mapi((function (ai, answeritem) {
+                                                        return React.createElement(GridItem$BtsCore.make, {
+                                                                    top: "0",
+                                                                    right: "0",
+                                                                    bottom: "6",
+                                                                    left: "0",
+                                                                    xs: "auto",
+                                                                    children: React.createElement(GridContainer$BtsCore.make, {
+                                                                          direction: "row",
+                                                                          justify: "start",
+                                                                          alignItem: "center",
+                                                                          children: null
+                                                                        }, React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "0",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "no",
+                                                                              children: React.createElement(IconButton$BtsCore.make, {
+                                                                                    padding: "4",
+                                                                                    disabled: state.showProgress,
+                                                                                    children: React.createElement(IconAction$BtsCore.make, {
+                                                                                          animation: "leftRight",
+                                                                                          src: Icons$BtsCore.radioButtonUncheckedBlack
+                                                                                        })
+                                                                                  })
+                                                                            }), React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "6",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "auto",
+                                                                              children: React.createElement(TextFieldStandard$BtsCore.make, {
+                                                                                    top: "0",
+                                                                                    enterBorderColor: AnswerColor$BtsCore.enterBorder(answeritem.showAnswer),
+                                                                                    downBorderColor: AnswerColor$BtsCore.downBorder(answeritem.showAnswer),
+                                                                                    borderColor: AnswerColor$BtsCore.border(answeritem.showAnswer),
+                                                                                    placeholder: "Option",
+                                                                                    value: answeritem.value,
+                                                                                    disabled: true,
+                                                                                    children: null
+                                                                                  })
+                                                                            }), React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "6",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "no",
+                                                                              children: React.createElement(IconButton$BtsCore.make, {
+                                                                                    padding: "4",
+                                                                                    disabled: state.showProgress,
+                                                                                    onClick: (function (param) {
+                                                                                        return Curry._3(clickTypeElement, item.typeOutValue, ai, i);
+                                                                                      }),
+                                                                                    children: React.createElement(IconAction$BtsCore.make, {
+                                                                                          animation: "leftRight",
+                                                                                          src: answeritem.showAnswer ? Icons$BtsCore.doneSuccessful : Icons$BtsCore.errorWarn
+                                                                                        })
+                                                                                  })
+                                                                            }))
+                                                                  });
+                                                      }), item.typeanswitems)
+                                              });
                                       }
                                     } else {
                                       tmp = null;
@@ -1343,6 +1675,61 @@ function Store(Props) {
                                     if (item.showPhone) {
                                       var match$1 = item.phoneOutValue;
                                       switch (match$1) {
+                                        case "droplist" :
+                                            tmp$1 = React.createElement(React.Fragment, undefined, React.createElement(SelectStandard$BtsCore.make, {
+                                                      labelColor: "rgba(255,0,0,0.8)",
+                                                      tile: item.phoneTitle,
+                                                      enterBorderColor: "rgba(255,0,0,0.8)",
+                                                      downBorderColor: "rgba(255,0,0,0.6)",
+                                                      borderColor: "rgba(0,0,0,0.2)",
+                                                      value: item.phoneValue,
+                                                      disabled: state.showProgress,
+                                                      onClick: (function (param) {
+                                                          return Curry._1(showPhoneMenu, i);
+                                                        }),
+                                                      children: /* tuple */[
+                                                        item.showPhoneMenu ? React.createElement(SelectMenu$BtsCore.make, {
+                                                                top: "50%",
+                                                                transform: "translate(0, -50%)",
+                                                                maxHeight: "280",
+                                                                minHeight: "0",
+                                                                topLeft: "12",
+                                                                topRight: "12",
+                                                                bottomRight: "12",
+                                                                bottomLeft: "12",
+                                                                paddingRight: "8",
+                                                                paddingLeft: "8",
+                                                                children: $$Array.map((function (phoneitem) {
+                                                                        return React.createElement(MenuItem$BtsCore.make, {
+                                                                                    top: "0",
+                                                                                    right: "8",
+                                                                                    bottom: "0",
+                                                                                    left: "8",
+                                                                                    disablePadding: phoneitem.optionPadding,
+                                                                                    topLeft: "12",
+                                                                                    topRight: "12",
+                                                                                    bottomRight: "12",
+                                                                                    bottomLeft: "12",
+                                                                                    onClick: (function (param) {
+                                                                                        return Curry._2(clickPhoneMenu, phoneitem.value, i);
+                                                                                      }),
+                                                                                    children: phoneitem.value
+                                                                                  });
+                                                                      }), item.phoneitems)
+                                                              }) : null,
+                                                        React.createElement(IconGeneral$BtsCore.make, {
+                                                              animation: IconAnimation$BtsCore.topDownRorate(item.showPhoneMenu),
+                                                              src: Icons$BtsCore.arrowDownBlack
+                                                            })
+                                                      ]
+                                                    }), React.createElement(BackgroundBoard$BtsCore.make, {
+                                                      showBackground: item.showPhoneMenu,
+                                                      backgroundColor: "transparent",
+                                                      onClick: (function (param) {
+                                                          return Curry._1(showPhoneMenu, i);
+                                                        })
+                                                    }));
+                                            break;
                                         case "image" :
                                             tmp$1 = React.createElement(ImageUpload$BtsCore.make, {
                                                   webLoad: state.showProgress,
@@ -1392,20 +1779,6 @@ function Store(Props) {
                                                 });
                                             break;
                                         case "textarea" :
-                                            tmp$1 = React.createElement(TextFieldStandard$BtsCore.make, {
-                                                  labelColor: "rgba(255,0,0,0.8)",
-                                                  enterBorderColor: "rgba(255,0,0,0.8)",
-                                                  downBorderColor: "rgba(255,0,0,0.6)",
-                                                  borderColor: "rgba(0,0,0,0.2)",
-                                                  value: item.phoneValue,
-                                                  disabled: state.showProgress,
-                                                  onChange: (function ($$event) {
-                                                      return Curry._2(changeItemPhone, $$event.target.value, i);
-                                                    }),
-                                                  children: item.phoneTitle
-                                                });
-                                            break;
-                                        case "textline" :
                                             tmp$1 = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                   labelColor: "rgba(255,0,0,0.8)",
                                                   enterBorderColor: "rgba(255,0,0,0.8)",
@@ -1420,88 +1793,171 @@ function Store(Props) {
                                                   children: item.phoneTitle
                                                 });
                                             break;
+                                        case "textline" :
+                                            tmp$1 = React.createElement(TextFieldStandard$BtsCore.make, {
+                                                  labelColor: "rgba(255,0,0,0.8)",
+                                                  enterBorderColor: "rgba(255,0,0,0.8)",
+                                                  downBorderColor: "rgba(255,0,0,0.6)",
+                                                  borderColor: "rgba(0,0,0,0.2)",
+                                                  value: item.phoneValue,
+                                                  disabled: state.showProgress,
+                                                  onChange: (function ($$event) {
+                                                      return Curry._2(changeItemPhone, $$event.target.value, i);
+                                                    }),
+                                                  children: item.phoneTitle
+                                                });
+                                            break;
                                         default:
-                                          tmp$1 = React.createElement(React.Fragment, undefined, React.createElement(SelectStandard$BtsCore.make, {
-                                                    labelColor: "rgba(255,0,0,0.8)",
-                                                    tile: item.phoneTitle,
-                                                    enterBorderColor: "rgba(255,0,0,0.8)",
-                                                    downBorderColor: "rgba(255,0,0,0.6)",
-                                                    borderColor: "rgba(0,0,0,0.2)",
-                                                    value: item.phoneValue,
-                                                    disabled: state.showProgress,
-                                                    onClick: (function (param) {
-                                                        return Curry._1(showPhoneMenu, i);
-                                                      }),
-                                                    children: /* tuple */[
-                                                      item.showPhoneMenu ? React.createElement(SelectMenu$BtsCore.make, {
-                                                              top: "50%",
-                                                              transform: "translate(0, -50%)",
-                                                              maxHeight: "280",
-                                                              minHeight: "0",
-                                                              topLeft: "12",
-                                                              topRight: "12",
-                                                              bottomRight: "12",
-                                                              bottomLeft: "12",
-                                                              paddingRight: "8",
-                                                              paddingLeft: "8",
-                                                              children: $$Array.map((function (phoneitem) {
-                                                                      return React.createElement(MenuItem$BtsCore.make, {
-                                                                                  top: "0",
-                                                                                  right: "8",
-                                                                                  bottom: "0",
-                                                                                  left: "8",
-                                                                                  disablePadding: phoneitem.optionPadding,
-                                                                                  topLeft: "12",
-                                                                                  topRight: "12",
-                                                                                  bottomRight: "12",
-                                                                                  bottomLeft: "12",
-                                                                                  onClick: (function (param) {
-                                                                                      return Curry._2(clickPhoneMenu, phoneitem.value, i);
-                                                                                    }),
-                                                                                  children: phoneitem.value
-                                                                                });
-                                                                    }), item.phoneitems)
-                                                            }) : null,
-                                                      React.createElement(IconGeneral$BtsCore.make, {
-                                                            animation: IconAnimation$BtsCore.topDownRorate(item.showPhoneMenu),
-                                                            src: Icons$BtsCore.arrowDownBlack
-                                                          })
-                                                    ]
-                                                  }), React.createElement(BackgroundBoard$BtsCore.make, {
-                                                    showBackground: item.showPhoneMenu,
-                                                    backgroundColor: "transparent",
-                                                    onClick: (function (param) {
-                                                        return Curry._1(showPhoneMenu, i);
-                                                      })
-                                                  }));
+                                          tmp$1 = React.createElement(GridContainer$BtsCore.make, {
+                                                direction: "column",
+                                                justify: "center",
+                                                alignItem: "stretch",
+                                                children: $$Array.mapi((function (ai, answeritem) {
+                                                        return React.createElement(GridItem$BtsCore.make, {
+                                                                    top: "0",
+                                                                    right: "0",
+                                                                    bottom: "6",
+                                                                    left: "0",
+                                                                    xs: "auto",
+                                                                    children: React.createElement(GridContainer$BtsCore.make, {
+                                                                          direction: "row",
+                                                                          justify: "start",
+                                                                          alignItem: "center",
+                                                                          children: null
+                                                                        }, React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "0",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "no",
+                                                                              children: React.createElement(IconButton$BtsCore.make, {
+                                                                                    padding: "4",
+                                                                                    disabled: state.showProgress,
+                                                                                    children: React.createElement(IconAction$BtsCore.make, {
+                                                                                          animation: "leftRight",
+                                                                                          src: Icons$BtsCore.radioButtonUncheckedBlack
+                                                                                        })
+                                                                                  })
+                                                                            }), React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "6",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "auto",
+                                                                              children: React.createElement(TextFieldStandard$BtsCore.make, {
+                                                                                    top: "0",
+                                                                                    enterBorderColor: AnswerColor$BtsCore.enterBorder(answeritem.showAnswer),
+                                                                                    downBorderColor: AnswerColor$BtsCore.downBorder(answeritem.showAnswer),
+                                                                                    borderColor: AnswerColor$BtsCore.border(answeritem.showAnswer),
+                                                                                    placeholder: "Option",
+                                                                                    value: answeritem.value,
+                                                                                    disabled: true,
+                                                                                    children: null
+                                                                                  })
+                                                                            }), React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "6",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "no",
+                                                                              children: React.createElement(IconButton$BtsCore.make, {
+                                                                                    padding: "4",
+                                                                                    disabled: state.showProgress,
+                                                                                    onClick: (function (param) {
+                                                                                        return Curry._3(clickPhoneElement, item.phoneOutValue, ai, i);
+                                                                                      }),
+                                                                                    children: React.createElement(IconAction$BtsCore.make, {
+                                                                                          animation: "leftRight",
+                                                                                          src: answeritem.showAnswer ? Icons$BtsCore.doneSuccessful : Icons$BtsCore.errorWarn
+                                                                                        })
+                                                                                  })
+                                                                            }))
+                                                                  });
+                                                      }), item.phoneanswitems)
+                                              });
                                       }
                                     } else {
                                       tmp$1 = null;
                                     }
                                     var tmp$2;
-                                    if (item.showAddress) {
-                                      var match$2 = item.addressOutValue;
+                                    if (item.showAddr) {
+                                      var match$2 = item.addrOutValue;
                                       switch (match$2) {
+                                        case "droplist" :
+                                            tmp$2 = React.createElement(React.Fragment, undefined, React.createElement(SelectStandard$BtsCore.make, {
+                                                      labelColor: "rgba(255,0,0,0.8)",
+                                                      tile: item.addrTitle,
+                                                      enterBorderColor: "rgba(255,0,0,0.8)",
+                                                      downBorderColor: "rgba(255,0,0,0.6)",
+                                                      borderColor: "rgba(0,0,0,0.2)",
+                                                      value: item.addrValue,
+                                                      disabled: state.showProgress,
+                                                      onClick: (function (param) {
+                                                          return Curry._1(showAddrMenu, i);
+                                                        }),
+                                                      children: /* tuple */[
+                                                        item.showAddrMenu ? React.createElement(SelectMenu$BtsCore.make, {
+                                                                top: "50%",
+                                                                transform: "translate(0, -50%)",
+                                                                maxHeight: "280",
+                                                                minHeight: "0",
+                                                                topLeft: "12",
+                                                                topRight: "12",
+                                                                bottomRight: "12",
+                                                                bottomLeft: "12",
+                                                                paddingRight: "8",
+                                                                paddingLeft: "8",
+                                                                children: $$Array.map((function (addressitem) {
+                                                                        return React.createElement(MenuItem$BtsCore.make, {
+                                                                                    top: "0",
+                                                                                    right: "8",
+                                                                                    bottom: "0",
+                                                                                    left: "8",
+                                                                                    disablePadding: addressitem.optionPadding,
+                                                                                    topLeft: "12",
+                                                                                    topRight: "12",
+                                                                                    bottomRight: "12",
+                                                                                    bottomLeft: "12",
+                                                                                    onClick: (function (param) {
+                                                                                        return Curry._2(clickAddrMenu, addressitem.value, i);
+                                                                                      }),
+                                                                                    children: addressitem.value
+                                                                                  });
+                                                                      }), item.addritems)
+                                                              }) : null,
+                                                        React.createElement(IconGeneral$BtsCore.make, {
+                                                              animation: IconAnimation$BtsCore.topDownRorate(item.showAddrMenu),
+                                                              src: Icons$BtsCore.arrowDownBlack
+                                                            })
+                                                      ]
+                                                    }), React.createElement(BackgroundBoard$BtsCore.make, {
+                                                      showBackground: item.showAddrMenu,
+                                                      backgroundColor: "transparent",
+                                                      onClick: (function (param) {
+                                                          return Curry._1(showAddrMenu, i);
+                                                        })
+                                                    }));
+                                            break;
                                         case "image" :
                                             tmp$2 = React.createElement(ImageUpload$BtsCore.make, {
                                                   webLoad: state.showProgress,
-                                                  showDrop: item.showAddressDrop,
-                                                  showFile: item.showAddressFile,
-                                                  src: item.addressValue,
+                                                  showDrop: item.showAddrDrop,
+                                                  showFile: item.showAddrFile,
+                                                  src: item.addrValue,
                                                   fileRef: fileRef,
                                                   onDragOver: (function ($$event) {
-                                                      return Curry._2(dragOverAddress, $$event, i);
+                                                      return Curry._2(dragOverAddr, $$event, i);
                                                     }),
                                                   onDragLeave: (function ($$event) {
-                                                      return Curry._2(dragLeaveAddress, $$event, i);
+                                                      return Curry._2(dragLeaveAddr, $$event, i);
                                                     }),
                                                   onDrop: (function ($$event) {
-                                                      return Curry._3(dropItemAddress, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
+                                                      return Curry._3(dropItemAddr, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                     }),
                                                   disabled: state.showProgress,
                                                   onClick: chooseFile,
                                                   onChange: (function ($$event) {
-                                                      return Curry._2(uploadItemAddress, Caml_array.caml_array_get($$event.target.files, 0), i);
+                                                      return Curry._2(uploadItemAddr, Caml_array.caml_array_get($$event.target.files, 0), i);
                                                     })
                                                 });
                                             break;
@@ -1512,7 +1968,7 @@ function Store(Props) {
                                                     paddingLeft: "6px"
                                                   },
                                                   noWrap: true,
-                                                  children: item.addressValue
+                                                  children: item.addrValue
                                                 });
                                             break;
                                         case "text" :
@@ -1522,97 +1978,111 @@ function Store(Props) {
                                                   enterBorderColor: "rgba(255,0,0,0.8)",
                                                   downBorderColor: "rgba(255,0,0,0.6)",
                                                   borderColor: "rgba(0,0,0,0.2)",
-                                                  value: item.addressValue,
+                                                  value: item.addrValue,
                                                   disabled: state.showProgress,
                                                   onChange: (function ($$event) {
-                                                      return Curry._2(changeItemAddress, $$event.target.value, i);
+                                                      return Curry._2(changeItemAddr, $$event.target.value, i);
                                                     }),
-                                                  children: item.addressTitle
+                                                  children: item.addrTitle
                                                 });
                                             break;
                                         case "textarea" :
-                                            tmp$2 = React.createElement(TextFieldStandard$BtsCore.make, {
-                                                  labelColor: "rgba(255,0,0,0.8)",
-                                                  enterBorderColor: "rgba(255,0,0,0.8)",
-                                                  downBorderColor: "rgba(255,0,0,0.6)",
-                                                  borderColor: "rgba(0,0,0,0.2)",
-                                                  value: item.addressValue,
-                                                  disabled: state.showProgress,
-                                                  onChange: (function ($$event) {
-                                                      return Curry._2(changeItemAddress, $$event.target.value, i);
-                                                    }),
-                                                  children: item.addressTitle
-                                                });
-                                            break;
-                                        case "textline" :
                                             tmp$2 = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                   labelColor: "rgba(255,0,0,0.8)",
                                                   enterBorderColor: "rgba(255,0,0,0.8)",
                                                   downBorderColor: "rgba(255,0,0,0.6)",
                                                   borderColor: "rgba(0,0,0,0.2)",
                                                   rows: 3,
-                                                  value: item.addressValue,
+                                                  value: item.addrValue,
                                                   disabled: state.showProgress,
                                                   onChange: (function ($$event) {
-                                                      return Curry._2(changeItemAddress, $$event.target.value, i);
+                                                      return Curry._2(changeItemAddr, $$event.target.value, i);
                                                     }),
-                                                  children: item.addressTitle
+                                                  children: item.addrTitle
+                                                });
+                                            break;
+                                        case "textline" :
+                                            tmp$2 = React.createElement(TextFieldStandard$BtsCore.make, {
+                                                  labelColor: "rgba(255,0,0,0.8)",
+                                                  enterBorderColor: "rgba(255,0,0,0.8)",
+                                                  downBorderColor: "rgba(255,0,0,0.6)",
+                                                  borderColor: "rgba(0,0,0,0.2)",
+                                                  value: item.addrValue,
+                                                  disabled: state.showProgress,
+                                                  onChange: (function ($$event) {
+                                                      return Curry._2(changeItemAddr, $$event.target.value, i);
+                                                    }),
+                                                  children: item.addrTitle
                                                 });
                                             break;
                                         default:
-                                          tmp$2 = React.createElement(React.Fragment, undefined, React.createElement(SelectStandard$BtsCore.make, {
-                                                    labelColor: "rgba(255,0,0,0.8)",
-                                                    tile: item.addressTitle,
-                                                    enterBorderColor: "rgba(255,0,0,0.8)",
-                                                    downBorderColor: "rgba(255,0,0,0.6)",
-                                                    borderColor: "rgba(0,0,0,0.2)",
-                                                    value: item.addressValue,
-                                                    disabled: state.showProgress,
-                                                    onClick: (function (param) {
-                                                        return Curry._1(showAddressMenu, i);
-                                                      }),
-                                                    children: /* tuple */[
-                                                      item.showAddressMenu ? React.createElement(SelectMenu$BtsCore.make, {
-                                                              top: "50%",
-                                                              transform: "translate(0, -50%)",
-                                                              maxHeight: "280",
-                                                              minHeight: "0",
-                                                              topLeft: "12",
-                                                              topRight: "12",
-                                                              bottomRight: "12",
-                                                              bottomLeft: "12",
-                                                              paddingRight: "8",
-                                                              paddingLeft: "8",
-                                                              children: $$Array.map((function (addressitem) {
-                                                                      return React.createElement(MenuItem$BtsCore.make, {
-                                                                                  top: "0",
-                                                                                  right: "8",
-                                                                                  bottom: "0",
-                                                                                  left: "8",
-                                                                                  disablePadding: addressitem.optionPadding,
-                                                                                  topLeft: "12",
-                                                                                  topRight: "12",
-                                                                                  bottomRight: "12",
-                                                                                  bottomLeft: "12",
-                                                                                  onClick: (function (param) {
-                                                                                      return Curry._2(clickAddressMenu, addressitem.value, i);
-                                                                                    }),
-                                                                                  children: addressitem.value
-                                                                                });
-                                                                    }), item.addressitems)
-                                                            }) : null,
-                                                      React.createElement(IconGeneral$BtsCore.make, {
-                                                            animation: IconAnimation$BtsCore.topDownRorate(item.showAddressMenu),
-                                                            src: Icons$BtsCore.arrowDownBlack
-                                                          })
-                                                    ]
-                                                  }), React.createElement(BackgroundBoard$BtsCore.make, {
-                                                    showBackground: item.showAddressMenu,
-                                                    backgroundColor: "transparent",
-                                                    onClick: (function (param) {
-                                                        return Curry._1(showAddressMenu, i);
-                                                      })
-                                                  }));
+                                          tmp$2 = React.createElement(GridContainer$BtsCore.make, {
+                                                direction: "column",
+                                                justify: "center",
+                                                alignItem: "stretch",
+                                                children: $$Array.mapi((function (ai, answeritem) {
+                                                        return React.createElement(GridItem$BtsCore.make, {
+                                                                    top: "0",
+                                                                    right: "0",
+                                                                    bottom: "6",
+                                                                    left: "0",
+                                                                    xs: "auto",
+                                                                    children: React.createElement(GridContainer$BtsCore.make, {
+                                                                          direction: "row",
+                                                                          justify: "start",
+                                                                          alignItem: "center",
+                                                                          children: null
+                                                                        }, React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "0",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "no",
+                                                                              children: React.createElement(IconButton$BtsCore.make, {
+                                                                                    padding: "4",
+                                                                                    disabled: state.showProgress,
+                                                                                    children: React.createElement(IconAction$BtsCore.make, {
+                                                                                          animation: "leftRight",
+                                                                                          src: Icons$BtsCore.radioButtonUncheckedBlack
+                                                                                        })
+                                                                                  })
+                                                                            }), React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "6",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "auto",
+                                                                              children: React.createElement(TextFieldStandard$BtsCore.make, {
+                                                                                    top: "0",
+                                                                                    enterBorderColor: AnswerColor$BtsCore.enterBorder(answeritem.showAnswer),
+                                                                                    downBorderColor: AnswerColor$BtsCore.downBorder(answeritem.showAnswer),
+                                                                                    borderColor: AnswerColor$BtsCore.border(answeritem.showAnswer),
+                                                                                    placeholder: "Option",
+                                                                                    value: answeritem.value,
+                                                                                    disabled: true,
+                                                                                    children: null
+                                                                                  })
+                                                                            }), React.createElement(GridItem$BtsCore.make, {
+                                                                              top: "0",
+                                                                              right: "6",
+                                                                              bottom: "0",
+                                                                              left: "0",
+                                                                              xs: "no",
+                                                                              children: React.createElement(IconButton$BtsCore.make, {
+                                                                                    padding: "4",
+                                                                                    disabled: state.showProgress,
+                                                                                    onClick: (function (param) {
+                                                                                        return Curry._3(clickAddrElement, item.addrOutValue, ai, i);
+                                                                                      }),
+                                                                                    children: React.createElement(IconAction$BtsCore.make, {
+                                                                                          animation: "leftRight",
+                                                                                          src: answeritem.showAnswer ? Icons$BtsCore.doneSuccessful : Icons$BtsCore.errorWarn
+                                                                                        })
+                                                                                  })
+                                                                            }))
+                                                                  });
+                                                      }), item.addranswitems)
+                                              });
                                       }
                                     } else {
                                       tmp$2 = null;

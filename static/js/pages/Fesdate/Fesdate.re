@@ -50,7 +50,7 @@ type item = {
   showEntimeMenu: bool,
   entimeitems: array(optionitem),
   showEnter: bool,
-  showModify: bool,
+  itemModify: bool,
 };
 
 type state = {
@@ -168,7 +168,7 @@ let reducer = (state, action) =>
                 ...item,
                 festValue: value,
                 showFestFile: !item.showFestFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -179,7 +179,7 @@ let reducer = (state, action) =>
       items:
         Array.mapi(
           (i, item) =>
-            index == i ? {...item, festValue: value, showModify: true} : item,
+            index == i ? {...item, festValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -202,7 +202,7 @@ let reducer = (state, action) =>
                 ...item,
                 festValue: value,
                 showFestMenu: !item.showFestMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -226,7 +226,7 @@ let reducer = (state, action) =>
                 ...item,
                 dateValue: value,
                 showDateFile: !item.showDateFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -237,7 +237,7 @@ let reducer = (state, action) =>
       items:
         Array.mapi(
           (i, item) =>
-            index == i ? {...item, dateValue: value, showModify: true} : item,
+            index == i ? {...item, dateValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -260,7 +260,7 @@ let reducer = (state, action) =>
                 ...item,
                 dateValue: value,
                 showDateMenu: !item.showDateMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -284,7 +284,7 @@ let reducer = (state, action) =>
                 ...item,
                 sttimeValue: value,
                 showSttimeFile: !item.showSttimeFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -296,7 +296,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, sttimeValue: value, showModify: true} : item,
+              ? {...item, sttimeValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -320,7 +320,7 @@ let reducer = (state, action) =>
                 ...item,
                 sttimeValue: value,
                 showSttimeMenu: !item.showSttimeMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -344,7 +344,7 @@ let reducer = (state, action) =>
                 ...item,
                 entimeValue: value,
                 showEntimeFile: !item.showEntimeFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -356,7 +356,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, entimeValue: value, showModify: true} : item,
+              ? {...item, entimeValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -380,7 +380,7 @@ let reducer = (state, action) =>
                 ...item,
                 entimeValue: value,
                 showEntimeMenu: !item.showEntimeMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -828,7 +828,7 @@ let make = _ => {
         state.tile,
         state.desc,
         Js_array.filter(
-          (item: item) => item.showModify === true,
+          (item: item) => item.itemModify === true,
           state.items,
         ),
         "newid" |> Locals.select,
@@ -1051,7 +1051,7 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
-                                 | "textarea" =>
+                                 | "textline" =>
                                    <TextFieldOutline
                                      top="0"
                                      left="0"
@@ -1070,6 +1070,28 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
+                                 | "textarea" =>
+                                   <TextFieldMultiline
+                                     top="0"
+                                     bottom="0"
+                                     left="0"
+                                     labelColor="rgba(255,0,0,0.8)"
+                                     borderTop="10"
+                                     borderBottom="10"
+                                     enterBorderColor="rgba(255,0,0,0.8)"
+                                     downBorderColor="rgba(255,0,0,0.6)"
+                                     borderColor="rgba(0,0,0,0.2)"
+                                     rows=3
+                                     value={item.festValue}
+                                     disabled={state.showProgress}
+                                     onChange={event =>
+                                       i
+                                       |> changeItemFest(
+                                            ReactEvent.Form.target(event)##value,
+                                          )
+                                     }>
+                                     null
+                                   </TextFieldMultiline>
                                  | _ =>
                                    <>
                                      <SelectOutline
@@ -1209,7 +1231,7 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
-                                 | "textarea" =>
+                                 | "textline" =>
                                    <TextFieldOutline
                                      top="0"
                                      left="0"
@@ -1228,6 +1250,28 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
+                                 | "textarea" =>
+                                   <TextFieldMultiline
+                                     top="0"
+                                     bottom="0"
+                                     left="0"
+                                     labelColor="rgba(255,0,0,0.8)"
+                                     borderTop="10"
+                                     borderBottom="10"
+                                     enterBorderColor="rgba(255,0,0,0.8)"
+                                     downBorderColor="rgba(255,0,0,0.6)"
+                                     borderColor="rgba(0,0,0,0.2)"
+                                     rows=3
+                                     value={item.dateValue}
+                                     disabled={state.showProgress}
+                                     onChange={event =>
+                                       i
+                                       |> changeItemDate(
+                                            ReactEvent.Form.target(event)##value,
+                                          )
+                                     }>
+                                     null
+                                   </TextFieldMultiline>
                                  | _ =>
                                    <>
                                      <SelectOutline
@@ -1367,7 +1411,7 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
-                                 | "textarea" =>
+                                 | "textline" =>
                                    <TextFieldOutline
                                      top="0"
                                      left="0"
@@ -1386,6 +1430,28 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
+                                 | "textarea" =>
+                                   <TextFieldMultiline
+                                     top="0"
+                                     bottom="0"
+                                     left="0"
+                                     labelColor="rgba(255,0,0,0.8)"
+                                     borderTop="10"
+                                     borderBottom="10"
+                                     enterBorderColor="rgba(255,0,0,0.8)"
+                                     downBorderColor="rgba(255,0,0,0.6)"
+                                     borderColor="rgba(0,0,0,0.2)"
+                                     rows=3
+                                     value={item.sttimeValue}
+                                     disabled={state.showProgress}
+                                     onChange={event =>
+                                       i
+                                       |> changeItemSttime(
+                                            ReactEvent.Form.target(event)##value,
+                                          )
+                                     }>
+                                     null
+                                   </TextFieldMultiline>
                                  | _ =>
                                    <>
                                      <SelectOutline
@@ -1525,7 +1591,7 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
-                                 | "textarea" =>
+                                 | "textline" =>
                                    <TextFieldOutline
                                      top="0"
                                      left="0"
@@ -1544,6 +1610,28 @@ let make = _ => {
                                      }>
                                      null
                                    </TextFieldOutline>
+                                 | "textarea" =>
+                                   <TextFieldMultiline
+                                     top="0"
+                                     bottom="0"
+                                     left="0"
+                                     labelColor="rgba(255,0,0,0.8)"
+                                     borderTop="10"
+                                     borderBottom="10"
+                                     enterBorderColor="rgba(255,0,0,0.8)"
+                                     downBorderColor="rgba(255,0,0,0.6)"
+                                     borderColor="rgba(0,0,0,0.2)"
+                                     rows=3
+                                     value={item.entimeValue}
+                                     disabled={state.showProgress}
+                                     onChange={event =>
+                                       i
+                                       |> changeItemEntime(
+                                            ReactEvent.Form.target(event)##value,
+                                          )
+                                     }>
+                                     null
+                                   </TextFieldMultiline>
                                  | _ =>
                                    <>
                                      <SelectOutline

@@ -64,9 +64,9 @@ type item = {
   showRemarkMenu: bool,
   remarkitems: array(optionitem),
   showMore: bool,
-  showDelete: bool,
-  showModify: bool,
-  showCreate: bool,
+  itemDelete: bool,
+  itemModify: bool,
+  itemCreate: bool,
 };
 
 type state = {
@@ -195,7 +195,7 @@ let reducer = (state, action) =>
                 ...item,
                 nameValue: value,
                 showNameFile: !item.showNameFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -206,7 +206,7 @@ let reducer = (state, action) =>
       items:
         Array.mapi(
           (i, item) =>
-            index == i ? {...item, nameValue: value, showModify: true} : item,
+            index == i ? {...item, nameValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -229,7 +229,7 @@ let reducer = (state, action) =>
                 ...item,
                 nameValue: value,
                 showNameMenu: !item.showNameMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -253,7 +253,7 @@ let reducer = (state, action) =>
                 ...item,
                 priceValue: value,
                 showPriceFile: !item.showPriceFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -265,7 +265,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, priceValue: value, showModify: true} : item,
+              ? {...item, priceValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -288,7 +288,7 @@ let reducer = (state, action) =>
                 ...item,
                 priceValue: value,
                 showPriceMenu: !item.showPriceMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -313,7 +313,7 @@ let reducer = (state, action) =>
                 ...item,
                 allergyValue: value,
                 showAllergyFile: !item.showAllergyFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -325,7 +325,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, allergyValue: value, showModify: true} : item,
+              ? {...item, allergyValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -349,7 +349,7 @@ let reducer = (state, action) =>
                 ...item,
                 allergyValue: value,
                 showAllergyMenu: !item.showAllergyMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -373,7 +373,7 @@ let reducer = (state, action) =>
                 ...item,
                 albumValue: value,
                 showAlbumFile: !item.showAlbumFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -385,7 +385,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, albumValue: value, showModify: true} : item,
+              ? {...item, albumValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -408,7 +408,7 @@ let reducer = (state, action) =>
                 ...item,
                 albumValue: value,
                 showAlbumMenu: !item.showAlbumMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -432,7 +432,7 @@ let reducer = (state, action) =>
                 ...item,
                 remarkValue: value,
                 showRemarkFile: !item.showRemarkFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -444,7 +444,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, remarkValue: value, showModify: true} : item,
+              ? {...item, remarkValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -468,7 +468,7 @@ let reducer = (state, action) =>
                 ...item,
                 remarkValue: value,
                 showRemarkMenu: !item.showRemarkMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -488,7 +488,7 @@ let reducer = (state, action) =>
       items:
         Array.mapi(
           (mi, item) =>
-            mindex == mi ? {...item, showDelete: !item.showDelete} : item,
+            mindex == mi ? {...item, itemDelete: !item.itemDelete} : item,
           state.items,
         ),
     }
@@ -496,7 +496,7 @@ let reducer = (state, action) =>
       ...state,
       items:
         Js_array.filter(
-          (item: item) => item.showDelete !== true,
+          (item: item) => item.itemDelete !== true,
           state.items,
         ),
     }
@@ -1028,9 +1028,9 @@ let make = _ => {
         state.desc,
         Js_array.filter(
           (item: item) =>
-            item.showModify === true
-            || item.showDelete === true
-            || item.showCreate === true,
+            item.itemModify === true
+            || item.itemDelete === true
+            || item.itemCreate === true,
           state.items,
         ),
         "newid" |> Locals.select,
@@ -1257,7 +1257,7 @@ let make = _ => {
                                              )
                                         }
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onClick=chooseFile
                                         onChange={event =>
@@ -1281,7 +1281,7 @@ let make = _ => {
                                         borderColor="rgba(0,0,0,0.2)"
                                         value={item.nameValue}
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onChange={event =>
                                           i
@@ -1291,7 +1291,7 @@ let make = _ => {
                                         }>
                                         {item.nameTitle |> string}
                                       </TextFieldOutline>
-                                    | "textarea" =>
+                                    | "textline" =>
                                       <TextFieldOutline
                                         top="0"
                                         bottom="0"
@@ -1304,7 +1304,7 @@ let make = _ => {
                                         borderColor="rgba(0,0,0,0.2)"
                                         value={item.nameValue}
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onChange={event =>
                                           i
@@ -1314,7 +1314,7 @@ let make = _ => {
                                         }>
                                         {item.nameTitle |> string}
                                       </TextFieldOutline>
-                                    | "textline" =>
+                                    | "textarea" =>
                                       <TextFieldMultiline
                                         top="0"
                                         bottom="0"
@@ -1328,7 +1328,7 @@ let make = _ => {
                                         rows=3
                                         value={item.nameValue}
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onChange={event =>
                                           i
@@ -1352,7 +1352,7 @@ let make = _ => {
                                           value={item.nameValue}
                                           disabled={
                                             state.showProgress
-                                            || item.showDelete
+                                            || item.itemDelete
                                           }
                                           onClick={_ => i |> showNameMenu}>
                                           ...(
@@ -1455,7 +1455,7 @@ let make = _ => {
                                              )
                                         }
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onClick=chooseFile
                                         onChange={event =>
@@ -1479,7 +1479,7 @@ let make = _ => {
                                         borderColor="rgba(0,0,0,0.2)"
                                         value={item.priceValue}
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onChange={event =>
                                           i
@@ -1489,7 +1489,7 @@ let make = _ => {
                                         }>
                                         {item.priceTitle |> string}
                                       </TextFieldOutline>
-                                    | "textarea" =>
+                                    | "textline" =>
                                       <TextFieldOutline
                                         top="0"
                                         bottom="0"
@@ -1502,7 +1502,7 @@ let make = _ => {
                                         borderColor="rgba(0,0,0,0.2)"
                                         value={item.priceValue}
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onChange={event =>
                                           i
@@ -1512,7 +1512,7 @@ let make = _ => {
                                         }>
                                         {item.priceTitle |> string}
                                       </TextFieldOutline>
-                                    | "textline" =>
+                                    | "textarea" =>
                                       <TextFieldMultiline
                                         top="0"
                                         bottom="0"
@@ -1526,7 +1526,7 @@ let make = _ => {
                                         rows=3
                                         value={item.priceValue}
                                         disabled={
-                                          state.showProgress || item.showDelete
+                                          state.showProgress || item.itemDelete
                                         }
                                         onChange={event =>
                                           i
@@ -1550,7 +1550,7 @@ let make = _ => {
                                           value={item.priceValue}
                                           disabled={
                                             state.showProgress
-                                            || item.showDelete
+                                            || item.itemDelete
                                           }
                                           onClick={_ => i |> showPriceMenu}>
                                           ...(
@@ -1734,7 +1734,7 @@ let make = _ => {
                                                 height="28"
                                                 animation="leftRight"
                                                 src={
-                                                  item.showDelete
+                                                  item.itemDelete
                                                     ? refreshBlack : clearWarn
                                                 }
                                               />
@@ -1748,7 +1748,7 @@ let make = _ => {
                                               backgroundColor="transparent"
                                               xs="no">
                                               <Typography variant="subheading">
-                                                {item.showDelete
+                                                {item.itemDelete
                                                    ? <FormattedMessage
                                                        id="refresh"
                                                        defaultMessage="Refresh"
@@ -1810,7 +1810,7 @@ let make = _ => {
                                          )
                                     }
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onClick=chooseFile
                                     onChange={event =>
@@ -1834,7 +1834,7 @@ let make = _ => {
                                     borderColor="rgba(0,0,0,0.2)"
                                     value={item.allergyValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -1844,7 +1844,7 @@ let make = _ => {
                                     }>
                                     {item.allergyTitle |> string}
                                   </TextFieldOutline>
-                                | "textarea" =>
+                                | "textline" =>
                                   <TextFieldOutline
                                     top="0"
                                     bottom="0"
@@ -1857,7 +1857,7 @@ let make = _ => {
                                     borderColor="rgba(0,0,0,0.2)"
                                     value={item.allergyValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -1867,7 +1867,7 @@ let make = _ => {
                                     }>
                                     {item.allergyTitle |> string}
                                   </TextFieldOutline>
-                                | "textline" =>
+                                | "textarea" =>
                                   <TextFieldMultiline
                                     top="0"
                                     bottom="0"
@@ -1881,7 +1881,7 @@ let make = _ => {
                                     rows=3
                                     value={item.allergyValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -1904,7 +1904,7 @@ let make = _ => {
                                       borderColor="rgba(0,0,0,0.2)"
                                       value={item.allergyValue}
                                       disabled={
-                                        state.showProgress || item.showDelete
+                                        state.showProgress || item.itemDelete
                                       }
                                       onClick={_ => i |> showAllergyMenu}>
                                       ...(
@@ -2006,7 +2006,7 @@ let make = _ => {
                                          )
                                     }
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onClick=chooseFile
                                     onChange={event =>
@@ -2030,7 +2030,7 @@ let make = _ => {
                                     borderColor="rgba(0,0,0,0.2)"
                                     value={item.albumValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -2040,7 +2040,7 @@ let make = _ => {
                                     }>
                                     {item.albumTitle |> string}
                                   </TextFieldOutline>
-                                | "textarea" =>
+                                | "textline" =>
                                   <TextFieldOutline
                                     top="0"
                                     bottom="0"
@@ -2053,7 +2053,7 @@ let make = _ => {
                                     borderColor="rgba(0,0,0,0.2)"
                                     value={item.albumValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -2063,7 +2063,7 @@ let make = _ => {
                                     }>
                                     {item.albumTitle |> string}
                                   </TextFieldOutline>
-                                | "textline" =>
+                                | "textarea" =>
                                   <TextFieldMultiline
                                     top="0"
                                     bottom="0"
@@ -2077,7 +2077,7 @@ let make = _ => {
                                     rows=3
                                     value={item.albumValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -2100,7 +2100,7 @@ let make = _ => {
                                       borderColor="rgba(0,0,0,0.2)"
                                       value={item.albumValue}
                                       disabled={
-                                        state.showProgress || item.showDelete
+                                        state.showProgress || item.itemDelete
                                       }
                                       onClick={_ => i |> showAlbumMenu}>
                                       ...(
@@ -2202,7 +2202,7 @@ let make = _ => {
                                          )
                                     }
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onClick=chooseFile
                                     onChange={event =>
@@ -2226,7 +2226,7 @@ let make = _ => {
                                     borderColor="rgba(0,0,0,0.2)"
                                     value={item.remarkValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -2236,7 +2236,7 @@ let make = _ => {
                                     }>
                                     {item.remarkTitle |> string}
                                   </TextFieldOutline>
-                                | "textarea" =>
+                                | "textline" =>
                                   <TextFieldOutline
                                     top="0"
                                     bottom="0"
@@ -2249,7 +2249,7 @@ let make = _ => {
                                     borderColor="rgba(0,0,0,0.2)"
                                     value={item.remarkValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -2259,7 +2259,7 @@ let make = _ => {
                                     }>
                                     {item.remarkTitle |> string}
                                   </TextFieldOutline>
-                                | "textline" =>
+                                | "textarea" =>
                                   <TextFieldMultiline
                                     top="0"
                                     bottom="0"
@@ -2273,7 +2273,7 @@ let make = _ => {
                                     rows=3
                                     value={item.remarkValue}
                                     disabled={
-                                      state.showProgress || item.showDelete
+                                      state.showProgress || item.itemDelete
                                     }
                                     onChange={event =>
                                       i
@@ -2296,7 +2296,7 @@ let make = _ => {
                                       borderColor="rgba(0,0,0,0.2)"
                                       value={item.remarkValue}
                                       disabled={
-                                        state.showProgress || item.showDelete
+                                        state.showProgress || item.itemDelete
                                       }
                                       onClick={_ => i |> showRemarkMenu}>
                                       ...(

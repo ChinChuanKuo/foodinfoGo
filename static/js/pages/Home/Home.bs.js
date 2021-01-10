@@ -347,7 +347,7 @@ function reducer(state, action) {
                                   content: chatitem.content,
                                   datetime: chatitem.datetime,
                                   name: chatitem.name,
-                                  showDelete: chatitem.showDelete,
+                                  itemDelete: chatitem.itemDelete,
                                   showEnter: index$2 === i
                                 };
                         }), state.chatitems),
@@ -852,7 +852,7 @@ function Home(Props) {
                                                         alignItem: "stretch",
                                                         children: $$Array.mapi((function (i, chatitem) {
                                                                 var match = chatitem.showEnter;
-                                                                var match$1 = chatitem.showDelete;
+                                                                var match$1 = chatitem.itemDelete;
                                                                 return React.createElement(React.Fragment, undefined, React.createElement("div", {
                                                                                 onMouseEnter: (function (param) {
                                                                                     return Curry._1(mouseChatItem, i);

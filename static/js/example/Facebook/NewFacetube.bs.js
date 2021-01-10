@@ -7,6 +7,7 @@ import * as Path$BtsCore from "../../features/Path.bs.js";
 import * as Icons$BtsCore from "../../material-ui/icon/Icons.bs.js";
 import * as List_$BtsCore from "../../material-ui/core/List_/List_.bs.js";
 import * as Drawer$BtsCore from "../../material-ui/core/Drawer/Drawer.bs.js";
+import * as Divider$BtsCore from "../../material-ui/core/Divider/Divider.bs.js";
 import * as OutSide$BtsCore from "../../styles/OutSide/OutSide.bs.js";
 import * as Setting$BtsCore from "../../setting/Setting.bs.js";
 import * as ListIcon$BtsCore from "../../material-ui/core/ListItem/ListIcon.bs.js";
@@ -14,6 +15,7 @@ import * as Together$BtsCore from "../../styles/Together/Together.bs.js";
 import * as ReasonReactRouter from "reason-react/src/ReasonReactRouter.js";
 import * as Typography$BtsCore from "../../material-ui/core/Typography/Typography.bs.js";
 import * as IconGeneral$BtsCore from "../../material-ui/core/IconStyle/IconGeneral.bs.js";
+import * as ObjectFormat$BtsCore from "../../controls/ObjectFormat.bs.js";
 import * as ProgressLinear$BtsCore from "../../material-ui/core/Progress/ProgressLinear.bs.js";
 
 ((require('../../../scss/example/Facebook/newFacetube.scss')));
@@ -108,61 +110,60 @@ function NewFacetube(Props) {
                   height: "64",
                   zIndex: "1000",
                   location: "left",
-                  children: React.createElement(List_$BtsCore.make, {
-                        top: "16",
-                        children: null
-                      }, React.createElement(ListIcon$BtsCore.make, {
-                            style: {
-                              height: "52px"
-                            },
-                            enterBackgroundColor: "rgba(0,0,0,0.12)",
-                            downBackgroundColor: "rgba(0,0,0,0.06)",
-                            topLeft: "20",
-                            topRight: "20",
-                            bottomRight: "20",
-                            bottomLeft: "20",
-                            onClick: (function (param) {
-                                return ReasonReactRouter.push(Path$BtsCore.homePath);
-                              }),
-                            children: /* tuple */[
-                              React.createElement(IconGeneral$BtsCore.make, {
-                                    src: Icons$BtsCore.homeBlack
-                                  }),
-                              React.createElement(Typography$BtsCore.make, {
-                                    variant: "subheading",
-                                    children: React.createElement(ReactIntl.FormattedMessage, {
-                                          id: "Path.home",
-                                          defaultMessage: "Home"
-                                        })
-                                  })
-                            ]
-                          }), React.createElement(ListIcon$BtsCore.make, {
-                            style: {
-                              height: "52px"
-                            },
-                            enterBackgroundColor: "rgba(0,0,0,0.12)",
-                            downBackgroundColor: "rgba(0,0,0,0.06)",
-                            topLeft: "20",
-                            topRight: "20",
-                            bottomRight: "20",
-                            bottomLeft: "20",
-                            onClick: (function (param) {
-                                return ReasonReactRouter.push(Path$BtsCore.homePath);
-                              }),
-                            children: /* tuple */[
-                              React.createElement(IconGeneral$BtsCore.make, {
-                                    src: Icons$BtsCore.homeBlack
-                                  }),
-                              React.createElement(Typography$BtsCore.make, {
-                                    variant: "subheading",
-                                    children: React.createElement(ReactIntl.FormattedMessage, {
-                                          id: "Path.home",
-                                          defaultMessage: "Home"
-                                        })
-                                  })
-                            ]
-                          }))
-                }), React.createElement("main", {
+                  children: null
+                }, React.createElement(List_$BtsCore.make, {
+                      top: "16",
+                      children: null
+                    }, React.createElement(ListIcon$BtsCore.make, {
+                          style: {
+                            height: "52px"
+                          },
+                          enterBackgroundColor: "rgba(0,0,0,0.12)",
+                          downBackgroundColor: "rgba(0,0,0,0.06)",
+                          topLeft: "20",
+                          topRight: "20",
+                          bottomRight: "20",
+                          bottomLeft: "20",
+                          children: /* tuple */[
+                            React.createElement(Typography$BtsCore.make, {
+                                  variant: "tile",
+                                  style: {
+                                    paddingLeft: "2px"
+                                  },
+                                  color: "#909090",
+                                  children: ObjectFormat$BtsCore.checkObjects(localStorage.getItem("name"))
+                                }),
+                            React.createElement(Typography$BtsCore.make, {
+                                  variant: "subheading",
+                                  children: ObjectFormat$BtsCore.checkObjects(localStorage.getItem("allname"))
+                                })
+                          ]
+                        }), React.createElement(ListIcon$BtsCore.make, {
+                          style: {
+                            height: "52px"
+                          },
+                          enterBackgroundColor: "rgba(0,0,0,0.12)",
+                          downBackgroundColor: "rgba(0,0,0,0.06)",
+                          topLeft: "20",
+                          topRight: "20",
+                          bottomRight: "20",
+                          bottomLeft: "20",
+                          onClick: (function (param) {
+                              return ReasonReactRouter.push(Path$BtsCore.homePath);
+                            }),
+                          children: /* tuple */[
+                            React.createElement(IconGeneral$BtsCore.make, {
+                                  src: Icons$BtsCore.homeBlack
+                                }),
+                            React.createElement(Typography$BtsCore.make, {
+                                  variant: "subheading",
+                                  children: React.createElement(ReactIntl.FormattedMessage, {
+                                        id: "Path.home",
+                                        defaultMessage: "Home"
+                                      })
+                                })
+                          ]
+                        })), React.createElement(Divider$BtsCore.make, { })), React.createElement("main", {
                   className: "ftmainlayout",
                   style: Object.assign(({}), OutSide$BtsCore.mainTube, {
                         bottom: bottoms(bottom),

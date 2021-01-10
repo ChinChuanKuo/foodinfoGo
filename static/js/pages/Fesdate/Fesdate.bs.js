@@ -36,6 +36,7 @@ import * as BackgroundBoard$BtsCore from "../../example/Boards/BackgroundBoard.b
 import * as SnackbarYoutube$BtsCore from "../../material-ui/core/Snackbar/SnackbarYoutube.bs.js";
 import * as TextFieldOutline$BtsCore from "../../material-ui/core/TextField/TextFieldOutline.bs.js";
 import * as TextFieldStandard$BtsCore from "../../material-ui/core/TextField/TextFieldStandard.bs.js";
+import * as TextFieldMultiline$BtsCore from "../../material-ui/core/TextField/TextFieldMultiline.bs.js";
 
 ((require('../../../scss/pages/Together/together.scss')));
 
@@ -329,7 +330,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.festValue = value;
                           newrecord.showFestFile = !item.showFestFile;
                           return newrecord;
@@ -362,7 +363,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.festValue = value$1;
                           return newrecord;
                         }), state.items),
@@ -424,7 +425,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.showFestMenu = !item.showFestMenu;
                           newrecord.festValue = value$2;
                           return newrecord;
@@ -488,7 +489,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.dateValue = value$3;
                           newrecord.showDateFile = !item.showDateFile;
                           return newrecord;
@@ -521,7 +522,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.dateValue = value$4;
                           return newrecord;
                         }), state.items),
@@ -583,7 +584,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.showDateMenu = !item.showDateMenu;
                           newrecord.dateValue = value$5;
                           return newrecord;
@@ -647,7 +648,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.sttimeValue = value$6;
                           newrecord.showSttimeFile = !item.showSttimeFile;
                           return newrecord;
@@ -680,7 +681,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.sttimeValue = value$7;
                           return newrecord;
                         }), state.items),
@@ -742,7 +743,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.showSttimeMenu = !item.showSttimeMenu;
                           newrecord.sttimeValue = value$8;
                           return newrecord;
@@ -806,7 +807,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.entimeValue = value$9;
                           newrecord.showEntimeFile = !item.showEntimeFile;
                           return newrecord;
@@ -839,7 +840,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.entimeValue = value$10;
                           return newrecord;
                         }), state.items),
@@ -901,7 +902,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.showEntimeMenu = !item.showEntimeMenu;
                           newrecord.entimeValue = value$11;
                           return newrecord;
@@ -1466,7 +1467,7 @@ function Fesdate(Props) {
   var insertForm = React.useCallback((function (param) {
           Curry._1(dispatch, /* ActionShowProgress */1);
           Axiosapi$BtsCore.Fesdate.insert(Data$BtsCore.iFormData(state.formId, state.tile, state.desc, state.items.filter((function (item) {
-                              return item.showModify === true;
+                              return item.itemModify === true;
                             })), localStorage.getItem("newid"))).then((function (response) {
                     var match = response.data.status;
                     var tmp;
@@ -1704,6 +1705,26 @@ function Fesdate(Props) {
                                                             });
                                                         break;
                                                     case "textarea" :
+                                                        tmp = React.createElement(TextFieldMultiline$BtsCore.make, {
+                                                              top: "0",
+                                                              bottom: "0",
+                                                              left: "0",
+                                                              labelColor: "rgba(255,0,0,0.8)",
+                                                              borderTop: "10",
+                                                              borderBottom: "10",
+                                                              enterBorderColor: "rgba(255,0,0,0.8)",
+                                                              downBorderColor: "rgba(255,0,0,0.6)",
+                                                              borderColor: "rgba(0,0,0,0.2)",
+                                                              rows: 3,
+                                                              value: item.festValue,
+                                                              disabled: state.showProgress,
+                                                              onChange: (function ($$event) {
+                                                                  return Curry._2(changeItemFest, $$event.target.value, i);
+                                                                }),
+                                                              children: null
+                                                            });
+                                                        break;
+                                                    case "textline" :
                                                         tmp = React.createElement(TextFieldOutline$BtsCore.make, {
                                                               top: "0",
                                                               left: "0",
@@ -1835,6 +1856,26 @@ function Fesdate(Props) {
                                                             });
                                                         break;
                                                     case "textarea" :
+                                                        tmp$1 = React.createElement(TextFieldMultiline$BtsCore.make, {
+                                                              top: "0",
+                                                              bottom: "0",
+                                                              left: "0",
+                                                              labelColor: "rgba(255,0,0,0.8)",
+                                                              borderTop: "10",
+                                                              borderBottom: "10",
+                                                              enterBorderColor: "rgba(255,0,0,0.8)",
+                                                              downBorderColor: "rgba(255,0,0,0.6)",
+                                                              borderColor: "rgba(0,0,0,0.2)",
+                                                              rows: 3,
+                                                              value: item.dateValue,
+                                                              disabled: state.showProgress,
+                                                              onChange: (function ($$event) {
+                                                                  return Curry._2(changeItemDate, $$event.target.value, i);
+                                                                }),
+                                                              children: null
+                                                            });
+                                                        break;
+                                                    case "textline" :
                                                         tmp$1 = React.createElement(TextFieldOutline$BtsCore.make, {
                                                               top: "0",
                                                               left: "0",
@@ -1966,6 +2007,26 @@ function Fesdate(Props) {
                                                             });
                                                         break;
                                                     case "textarea" :
+                                                        tmp$2 = React.createElement(TextFieldMultiline$BtsCore.make, {
+                                                              top: "0",
+                                                              bottom: "0",
+                                                              left: "0",
+                                                              labelColor: "rgba(255,0,0,0.8)",
+                                                              borderTop: "10",
+                                                              borderBottom: "10",
+                                                              enterBorderColor: "rgba(255,0,0,0.8)",
+                                                              downBorderColor: "rgba(255,0,0,0.6)",
+                                                              borderColor: "rgba(0,0,0,0.2)",
+                                                              rows: 3,
+                                                              value: item.sttimeValue,
+                                                              disabled: state.showProgress,
+                                                              onChange: (function ($$event) {
+                                                                  return Curry._2(changeItemSttime, $$event.target.value, i);
+                                                                }),
+                                                              children: null
+                                                            });
+                                                        break;
+                                                    case "textline" :
                                                         tmp$2 = React.createElement(TextFieldOutline$BtsCore.make, {
                                                               top: "0",
                                                               left: "0",
@@ -2097,6 +2158,26 @@ function Fesdate(Props) {
                                                             });
                                                         break;
                                                     case "textarea" :
+                                                        tmp$3 = React.createElement(TextFieldMultiline$BtsCore.make, {
+                                                              top: "0",
+                                                              bottom: "0",
+                                                              left: "0",
+                                                              labelColor: "rgba(255,0,0,0.8)",
+                                                              borderTop: "10",
+                                                              borderBottom: "10",
+                                                              enterBorderColor: "rgba(255,0,0,0.8)",
+                                                              downBorderColor: "rgba(255,0,0,0.6)",
+                                                              borderColor: "rgba(0,0,0,0.2)",
+                                                              rows: 3,
+                                                              value: item.entimeValue,
+                                                              disabled: state.showProgress,
+                                                              onChange: (function ($$event) {
+                                                                  return Curry._2(changeItemEntime, $$event.target.value, i);
+                                                                }),
+                                                              children: null
+                                                            });
+                                                        break;
+                                                    case "textline" :
                                                         tmp$3 = React.createElement(TextFieldOutline$BtsCore.make, {
                                                               top: "0",
                                                               left: "0",

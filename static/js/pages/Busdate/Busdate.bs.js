@@ -37,6 +37,7 @@ import * as BackgroundBoard$BtsCore from "../../example/Boards/BackgroundBoard.b
 import * as SnackbarYoutube$BtsCore from "../../material-ui/core/Snackbar/SnackbarYoutube.bs.js";
 import * as TextFieldOutline$BtsCore from "../../material-ui/core/TextField/TextFieldOutline.bs.js";
 import * as TextFieldStandard$BtsCore from "../../material-ui/core/TextField/TextFieldStandard.bs.js";
+import * as TextFieldMultiline$BtsCore from "../../material-ui/core/TextField/TextFieldMultiline.bs.js";
 
 ((require('../../../scss/pages/Together/together.scss')));
 
@@ -128,7 +129,7 @@ function reducer(state, action) {
                   index: state.index,
                   heads: state.heads,
                   items: state.items.filter((function (item) {
-                          return item.showDelete !== true;
+                          return item.itemDelete !== true;
                         })),
                   showYoutube: state.showYoutube,
                   youtubeText: state.youtubeText
@@ -354,7 +355,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.weekValue = value;
                           newrecord.showWeekFile = !item.showWeekFile;
                           return newrecord;
@@ -387,7 +388,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.weekValue = value$1;
                           return newrecord;
                         }), state.items),
@@ -449,7 +450,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.showWeekMenu = !item.showWeekMenu;
                           newrecord.weekValue = value$2;
                           return newrecord;
@@ -513,7 +514,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.sttimeValue = value$3;
                           newrecord.showSttimeFile = !item.showSttimeFile;
                           return newrecord;
@@ -546,7 +547,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.sttimeValue = value$4;
                           return newrecord;
                         }), state.items),
@@ -608,7 +609,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.showSttimeMenu = !item.showSttimeMenu;
                           newrecord.sttimeValue = value$5;
                           return newrecord;
@@ -672,7 +673,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.entimeValue = value$6;
                           newrecord.showEntimeFile = !item.showEntimeFile;
                           return newrecord;
@@ -705,7 +706,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.entimeValue = value$7;
                           return newrecord;
                         }), state.items),
@@ -767,7 +768,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showModify = true;
+                          newrecord.itemModify = true;
                           newrecord.showEntimeMenu = !item.showEntimeMenu;
                           newrecord.entimeValue = value$8;
                           return newrecord;
@@ -829,7 +830,7 @@ function reducer(state, action) {
                             return item;
                           }
                           var newrecord = Caml_obj.caml_obj_dup(item);
-                          newrecord.showDelete = !item.showDelete;
+                          newrecord.itemDelete = !item.itemDelete;
                           return newrecord;
                         }), state.items),
                   showYoutube: state.showYoutube,
@@ -1319,10 +1320,10 @@ function Busdate(Props) {
   var insertForm = React.useCallback((function (param) {
           Curry._1(dispatch, /* ActionShowProgress */1);
           Axiosapi$BtsCore.Busdate.insert(Data$BtsCore.iFormData(state.formId, state.tile, state.desc, state.items.filter((function (item) {
-                              if (item.showModify === true) {
+                              if (item.itemModify === true) {
                                 return true;
                               } else {
-                                return item.showDelete === true;
+                                return item.itemDelete === true;
                               }
                             })), localStorage.getItem("newid"))).then((function (response) {
                     var match = response.data.status;
@@ -1542,7 +1543,7 @@ function Busdate(Props) {
                                                               onDrop: (function ($$event) {
                                                                   return Curry._3(dropItemWeek, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                                 }),
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onClick: chooseFile,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(uploadItemWeek, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1567,7 +1568,7 @@ function Busdate(Props) {
                                                               downBorderColor: "rgba(255,0,0,0.6)",
                                                               borderColor: "rgba(0,0,0,0.2)",
                                                               value: item.weekValue,
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(changeItemWeek, $$event.target.value, i);
                                                                 }),
@@ -1575,6 +1576,26 @@ function Busdate(Props) {
                                                             });
                                                         break;
                                                     case "textarea" :
+                                                        tmp = React.createElement(TextFieldMultiline$BtsCore.make, {
+                                                              top: "0",
+                                                              bottom: "0",
+                                                              left: "0",
+                                                              labelColor: "rgba(255,0,0,0.8)",
+                                                              borderTop: "10",
+                                                              borderBottom: "10",
+                                                              enterBorderColor: "rgba(255,0,0,0.8)",
+                                                              downBorderColor: "rgba(255,0,0,0.6)",
+                                                              borderColor: "rgba(0,0,0,0.2)",
+                                                              rows: 3,
+                                                              value: item.weekValue,
+                                                              disabled: state.showProgress || item.itemDelete,
+                                                              onChange: (function ($$event) {
+                                                                  return Curry._2(changeItemWeek, $$event.target.value, i);
+                                                                }),
+                                                              children: null
+                                                            });
+                                                        break;
+                                                    case "textline" :
                                                         tmp = React.createElement(TextFieldOutline$BtsCore.make, {
                                                               top: "0",
                                                               left: "0",
@@ -1584,7 +1605,7 @@ function Busdate(Props) {
                                                               downBorderColor: "rgba(255,0,0,0.6)",
                                                               borderColor: "rgba(0,0,0,0.2)",
                                                               value: item.weekValue,
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(changeItemWeek, $$event.target.value, i);
                                                                 }),
@@ -1599,7 +1620,7 @@ function Busdate(Props) {
                                                                 downBorderColor: "rgba(255,0,0,0.6)",
                                                                 borderColor: "rgba(0,0,0,0.2)",
                                                                 value: item.weekValue,
-                                                                disabled: state.showProgress || item.showDelete,
+                                                                disabled: state.showProgress || item.itemDelete,
                                                                 onClick: (function (param) {
                                                                     return Curry._1(showWeekMenu, i);
                                                                   }),
@@ -1669,7 +1690,7 @@ function Busdate(Props) {
                                                               onDrop: (function ($$event) {
                                                                   return Curry._3(dropItemSttime, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                                 }),
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onClick: chooseFile,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(uploadItemSttime, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1698,7 +1719,7 @@ function Busdate(Props) {
                                                               downBorderColor: "rgba(255,0,0,0.6)",
                                                               borderColor: "rgba(0,0,0,0.2)",
                                                               value: item.sttimeValue,
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(changeItemSttime, $$event.target.value, i);
                                                                 }),
@@ -1706,6 +1727,26 @@ function Busdate(Props) {
                                                             });
                                                         break;
                                                     case "textarea" :
+                                                        tmp$1 = React.createElement(TextFieldMultiline$BtsCore.make, {
+                                                              top: "0",
+                                                              bottom: "0",
+                                                              left: "0",
+                                                              labelColor: "rgba(255,0,0,0.8)",
+                                                              borderTop: "10",
+                                                              borderBottom: "10",
+                                                              enterBorderColor: "rgba(255,0,0,0.8)",
+                                                              downBorderColor: "rgba(255,0,0,0.6)",
+                                                              borderColor: "rgba(0,0,0,0.2)",
+                                                              rows: 3,
+                                                              value: item.sttimeValue,
+                                                              disabled: state.showProgress || item.itemDelete,
+                                                              onChange: (function ($$event) {
+                                                                  return Curry._2(changeItemSttime, $$event.target.value, i);
+                                                                }),
+                                                              children: null
+                                                            });
+                                                        break;
+                                                    case "textline" :
                                                         tmp$1 = React.createElement(TextFieldOutline$BtsCore.make, {
                                                               top: "0",
                                                               left: "0",
@@ -1715,7 +1756,7 @@ function Busdate(Props) {
                                                               downBorderColor: "rgba(255,0,0,0.6)",
                                                               borderColor: "rgba(0,0,0,0.2)",
                                                               value: item.sttimeValue,
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(changeItemSttime, $$event.target.value, i);
                                                                 }),
@@ -1730,7 +1771,7 @@ function Busdate(Props) {
                                                                 downBorderColor: "rgba(255,0,0,0.6)",
                                                                 borderColor: "rgba(0,0,0,0.2)",
                                                                 value: item.sttimeValue,
-                                                                disabled: state.showProgress || item.showDelete,
+                                                                disabled: state.showProgress || item.itemDelete,
                                                                 onClick: (function (param) {
                                                                     return Curry._1(showSttimeMenu, i);
                                                                   }),
@@ -1800,7 +1841,7 @@ function Busdate(Props) {
                                                               onDrop: (function ($$event) {
                                                                   return Curry._3(dropItemEntime, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                                 }),
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onClick: chooseFile,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(uploadItemEntime, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1829,7 +1870,7 @@ function Busdate(Props) {
                                                               downBorderColor: "rgba(255,0,0,0.6)",
                                                               borderColor: "rgba(0,0,0,0.2)",
                                                               value: item.entimeValue,
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(changeItemEntime, $$event.target.value, i);
                                                                 }),
@@ -1837,6 +1878,26 @@ function Busdate(Props) {
                                                             });
                                                         break;
                                                     case "textarea" :
+                                                        tmp$2 = React.createElement(TextFieldMultiline$BtsCore.make, {
+                                                              top: "0",
+                                                              bottom: "0",
+                                                              left: "0",
+                                                              labelColor: "rgba(255,0,0,0.8)",
+                                                              borderTop: "10",
+                                                              borderBottom: "10",
+                                                              enterBorderColor: "rgba(255,0,0,0.8)",
+                                                              downBorderColor: "rgba(255,0,0,0.6)",
+                                                              borderColor: "rgba(0,0,0,0.2)",
+                                                              rows: 3,
+                                                              value: item.entimeValue,
+                                                              disabled: state.showProgress || item.itemDelete,
+                                                              onChange: (function ($$event) {
+                                                                  return Curry._2(changeItemEntime, $$event.target.value, i);
+                                                                }),
+                                                              children: null
+                                                            });
+                                                        break;
+                                                    case "textline" :
                                                         tmp$2 = React.createElement(TextFieldOutline$BtsCore.make, {
                                                               top: "0",
                                                               left: "0",
@@ -1846,7 +1907,7 @@ function Busdate(Props) {
                                                               downBorderColor: "rgba(255,0,0,0.6)",
                                                               borderColor: "rgba(0,0,0,0.2)",
                                                               value: item.entimeValue,
-                                                              disabled: state.showProgress || item.showDelete,
+                                                              disabled: state.showProgress || item.itemDelete,
                                                               onChange: (function ($$event) {
                                                                   return Curry._2(changeItemEntime, $$event.target.value, i);
                                                                 }),
@@ -1861,7 +1922,7 @@ function Busdate(Props) {
                                                                 downBorderColor: "rgba(255,0,0,0.6)",
                                                                 borderColor: "rgba(0,0,0,0.2)",
                                                                 value: item.entimeValue,
-                                                                disabled: state.showProgress || item.showDelete,
+                                                                disabled: state.showProgress || item.itemDelete,
                                                                 onClick: (function (param) {
                                                                     return Curry._1(showEntimeMenu, i);
                                                                   }),
@@ -2069,7 +2130,7 @@ function Busdate(Props) {
                                                                                                     width: "28",
                                                                                                     height: "28",
                                                                                                     animation: "leftRight",
-                                                                                                    src: item.showDelete ? Icons$BtsCore.refreshBlack : Icons$BtsCore.deleteBlack
+                                                                                                    src: item.itemDelete ? Icons$BtsCore.refreshBlack : Icons$BtsCore.deleteBlack
                                                                                                   })
                                                                                             }), React.createElement(GridItem$BtsCore.make, {
                                                                                               top: "0",
@@ -2081,7 +2142,7 @@ function Busdate(Props) {
                                                                                               xs: "no",
                                                                                               children: React.createElement(Typography$BtsCore.make, {
                                                                                                     variant: "subheading",
-                                                                                                    children: item.showDelete ? React.createElement(ReactIntl.FormattedMessage, {
+                                                                                                    children: item.itemDelete ? React.createElement(ReactIntl.FormattedMessage, {
                                                                                                             id: "refresh",
                                                                                                             defaultMessage: "Refresh"
                                                                                                           }) : React.createElement(ReactIntl.FormattedMessage, {

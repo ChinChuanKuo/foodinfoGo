@@ -596,11 +596,11 @@ var initialState_qaitems = [
   },
   {
     icon: Icons$BtsCore.notesBlack,
-    value: "textarea"
+    value: "textline"
   },
   {
     icon: Icons$BtsCore.menuBlack,
-    value: "textline"
+    value: "textarea"
   },
   {
     icon: Icons$BtsCore.radioButtonCheckedBlack,

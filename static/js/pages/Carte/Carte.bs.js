@@ -61,7 +61,7 @@ function reducer(state, action) {
       case /* RefreshMenuForm */3 :
           var newrecord$3 = Caml_obj.caml_obj_dup(state);
           newrecord$3.items = state.items.filter((function (item) {
-                  return item.showDelete !== true;
+                  return item.itemDelete !== true;
                 }));
           return newrecord$3;
       
@@ -139,7 +139,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.nameValue = value;
                   newrecord.showNameFile = !item.showNameFile;
                   return newrecord;
@@ -154,7 +154,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.nameValue = value$1;
                   return newrecord;
                 }), state.items);
@@ -180,7 +180,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.showNameMenu = !item.showNameMenu;
                   newrecord.nameValue = value$2;
                   return newrecord;
@@ -208,7 +208,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.priceValue = value$3;
                   newrecord.showPriceFile = !item.showPriceFile;
                   return newrecord;
@@ -223,7 +223,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.priceValue = value$4;
                   return newrecord;
                 }), state.items);
@@ -249,7 +249,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.showPriceMenu = !item.showPriceMenu;
                   newrecord.priceValue = value$5;
                   return newrecord;
@@ -277,7 +277,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.allergyValue = value$6;
                   newrecord.showAllergyFile = !item.showAllergyFile;
                   return newrecord;
@@ -292,7 +292,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.allergyValue = value$7;
                   return newrecord;
                 }), state.items);
@@ -318,7 +318,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.showAllergyMenu = !item.showAllergyMenu;
                   newrecord.allergyValue = value$8;
                   return newrecord;
@@ -346,7 +346,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.albumValue = value$9;
                   newrecord.showAlbumFile = !item.showAlbumFile;
                   return newrecord;
@@ -361,7 +361,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.albumValue = value$10;
                   return newrecord;
                 }), state.items);
@@ -387,7 +387,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.showAlbumMenu = !item.showAlbumMenu;
                   newrecord.albumValue = value$11;
                   return newrecord;
@@ -415,7 +415,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.remarkValue = value$12;
                   newrecord.showRemarkFile = !item.showRemarkFile;
                   return newrecord;
@@ -430,7 +430,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.remarkValue = value$13;
                   return newrecord;
                 }), state.items);
@@ -456,7 +456,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showModify = true;
+                  newrecord.itemModify = true;
                   newrecord.showRemarkMenu = !item.showRemarkMenu;
                   newrecord.remarkValue = value$14;
                   return newrecord;
@@ -482,7 +482,7 @@ function reducer(state, action) {
                     return item;
                   }
                   var newrecord = Caml_obj.caml_obj_dup(item);
-                  newrecord.showDelete = !item.showDelete;
+                  newrecord.itemDelete = !item.itemDelete;
                   return newrecord;
                 }), state.items);
           return newrecord$38;
@@ -1089,10 +1089,10 @@ function Carte(Props) {
   var insertForm = React.useCallback((function (param) {
           Curry._1(dispatch, /* ActionShowProgress */1);
           Axiosapi$BtsCore.Carte.insert(Data$BtsCore.iFormData(state.formId, state.tile, state.desc, state.items.filter((function (item) {
-                              if (item.showModify === true || item.showDelete === true) {
+                              if (item.itemModify === true || item.itemDelete === true) {
                                 return true;
                               } else {
-                                return item.showCreate === true;
+                                return item.itemCreate === true;
                               }
                             })), localStorage.getItem("newid"))).then((function (response) {
                     var match = response.data.status;
@@ -1279,7 +1279,7 @@ function Carte(Props) {
                                                         onDrop: (function ($$event) {
                                                             return Curry._3(dropItemName, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                           }),
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onClick: chooseFile,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(uploadItemName, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1310,7 +1310,7 @@ function Carte(Props) {
                                                         downBorderColor: "rgba(255,0,0,0.6)",
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         value: item.nameValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemName, $$event.target.value, i);
                                                           }),
@@ -1318,25 +1318,6 @@ function Carte(Props) {
                                                       });
                                                   break;
                                               case "textarea" :
-                                                  tmp = React.createElement(TextFieldOutline$BtsCore.make, {
-                                                        top: "0",
-                                                        bottom: "0",
-                                                        left: "0",
-                                                        labelColor: "rgba(255,0,0,0.8)",
-                                                        borderTop: "10",
-                                                        borderBottom: "10",
-                                                        enterBorderColor: "rgba(255,0,0,0.8)",
-                                                        downBorderColor: "rgba(255,0,0,0.6)",
-                                                        borderColor: "rgba(0,0,0,0.2)",
-                                                        value: item.nameValue,
-                                                        disabled: state.showProgress || item.showDelete,
-                                                        onChange: (function ($$event) {
-                                                            return Curry._2(changeItemName, $$event.target.value, i);
-                                                          }),
-                                                        children: item.nameTitle
-                                                      });
-                                                  break;
-                                              case "textline" :
                                                   tmp = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                         top: "0",
                                                         bottom: "0",
@@ -1349,7 +1330,26 @@ function Carte(Props) {
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         rows: 3,
                                                         value: item.nameValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
+                                                        onChange: (function ($$event) {
+                                                            return Curry._2(changeItemName, $$event.target.value, i);
+                                                          }),
+                                                        children: item.nameTitle
+                                                      });
+                                                  break;
+                                              case "textline" :
+                                                  tmp = React.createElement(TextFieldOutline$BtsCore.make, {
+                                                        top: "0",
+                                                        bottom: "0",
+                                                        left: "0",
+                                                        labelColor: "rgba(255,0,0,0.8)",
+                                                        borderTop: "10",
+                                                        borderBottom: "10",
+                                                        enterBorderColor: "rgba(255,0,0,0.8)",
+                                                        downBorderColor: "rgba(255,0,0,0.6)",
+                                                        borderColor: "rgba(0,0,0,0.2)",
+                                                        value: item.nameValue,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemName, $$event.target.value, i);
                                                           }),
@@ -1367,7 +1367,7 @@ function Carte(Props) {
                                                           downBorderColor: "rgba(255,0,0,0.6)",
                                                           borderColor: "rgba(0,0,0,0.2)",
                                                           value: item.nameValue,
-                                                          disabled: state.showProgress || item.showDelete,
+                                                          disabled: state.showProgress || item.itemDelete,
                                                           onClick: (function (param) {
                                                               return Curry._1(showNameMenu, i);
                                                             }),
@@ -1437,7 +1437,7 @@ function Carte(Props) {
                                                         onDrop: (function ($$event) {
                                                             return Curry._3(dropItemPrice, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                           }),
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onClick: chooseFile,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(uploadItemPrice, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1468,7 +1468,7 @@ function Carte(Props) {
                                                         downBorderColor: "rgba(255,0,0,0.6)",
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         value: item.priceValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemPrice, $$event.target.value, i);
                                                           }),
@@ -1476,25 +1476,6 @@ function Carte(Props) {
                                                       });
                                                   break;
                                               case "textarea" :
-                                                  tmp$1 = React.createElement(TextFieldOutline$BtsCore.make, {
-                                                        top: "0",
-                                                        bottom: "0",
-                                                        left: "0",
-                                                        labelColor: "rgba(255,0,0,0.8)",
-                                                        borderTop: "10",
-                                                        borderBottom: "10",
-                                                        enterBorderColor: "rgba(255,0,0,0.8)",
-                                                        downBorderColor: "rgba(255,0,0,0.6)",
-                                                        borderColor: "rgba(0,0,0,0.2)",
-                                                        value: item.priceValue,
-                                                        disabled: state.showProgress || item.showDelete,
-                                                        onChange: (function ($$event) {
-                                                            return Curry._2(changeItemPrice, $$event.target.value, i);
-                                                          }),
-                                                        children: item.priceTitle
-                                                      });
-                                                  break;
-                                              case "textline" :
                                                   tmp$1 = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                         top: "0",
                                                         bottom: "0",
@@ -1507,7 +1488,26 @@ function Carte(Props) {
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         rows: 3,
                                                         value: item.priceValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
+                                                        onChange: (function ($$event) {
+                                                            return Curry._2(changeItemPrice, $$event.target.value, i);
+                                                          }),
+                                                        children: item.priceTitle
+                                                      });
+                                                  break;
+                                              case "textline" :
+                                                  tmp$1 = React.createElement(TextFieldOutline$BtsCore.make, {
+                                                        top: "0",
+                                                        bottom: "0",
+                                                        left: "0",
+                                                        labelColor: "rgba(255,0,0,0.8)",
+                                                        borderTop: "10",
+                                                        borderBottom: "10",
+                                                        enterBorderColor: "rgba(255,0,0,0.8)",
+                                                        downBorderColor: "rgba(255,0,0,0.6)",
+                                                        borderColor: "rgba(0,0,0,0.2)",
+                                                        value: item.priceValue,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemPrice, $$event.target.value, i);
                                                           }),
@@ -1525,7 +1525,7 @@ function Carte(Props) {
                                                           downBorderColor: "rgba(255,0,0,0.6)",
                                                           borderColor: "rgba(0,0,0,0.2)",
                                                           value: item.priceValue,
-                                                          disabled: state.showProgress || item.showDelete,
+                                                          disabled: state.showProgress || item.itemDelete,
                                                           onClick: (function (param) {
                                                               return Curry._1(showPriceMenu, i);
                                                             }),
@@ -1595,7 +1595,7 @@ function Carte(Props) {
                                                         onDrop: (function ($$event) {
                                                             return Curry._3(dropItemAllergy, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                           }),
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onClick: chooseFile,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(uploadItemAllergy, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1626,7 +1626,7 @@ function Carte(Props) {
                                                         downBorderColor: "rgba(255,0,0,0.6)",
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         value: item.allergyValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemAllergy, $$event.target.value, i);
                                                           }),
@@ -1634,25 +1634,6 @@ function Carte(Props) {
                                                       });
                                                   break;
                                               case "textarea" :
-                                                  tmp$2 = React.createElement(TextFieldOutline$BtsCore.make, {
-                                                        top: "0",
-                                                        bottom: "0",
-                                                        left: "0",
-                                                        labelColor: "rgba(255,0,0,0.8)",
-                                                        borderTop: "10",
-                                                        borderBottom: "10",
-                                                        enterBorderColor: "rgba(255,0,0,0.8)",
-                                                        downBorderColor: "rgba(255,0,0,0.6)",
-                                                        borderColor: "rgba(0,0,0,0.2)",
-                                                        value: item.allergyValue,
-                                                        disabled: state.showProgress || item.showDelete,
-                                                        onChange: (function ($$event) {
-                                                            return Curry._2(changeItemAllergy, $$event.target.value, i);
-                                                          }),
-                                                        children: item.allergyTitle
-                                                      });
-                                                  break;
-                                              case "textline" :
                                                   tmp$2 = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                         top: "0",
                                                         bottom: "0",
@@ -1665,7 +1646,26 @@ function Carte(Props) {
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         rows: 3,
                                                         value: item.allergyValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
+                                                        onChange: (function ($$event) {
+                                                            return Curry._2(changeItemAllergy, $$event.target.value, i);
+                                                          }),
+                                                        children: item.allergyTitle
+                                                      });
+                                                  break;
+                                              case "textline" :
+                                                  tmp$2 = React.createElement(TextFieldOutline$BtsCore.make, {
+                                                        top: "0",
+                                                        bottom: "0",
+                                                        left: "0",
+                                                        labelColor: "rgba(255,0,0,0.8)",
+                                                        borderTop: "10",
+                                                        borderBottom: "10",
+                                                        enterBorderColor: "rgba(255,0,0,0.8)",
+                                                        downBorderColor: "rgba(255,0,0,0.6)",
+                                                        borderColor: "rgba(0,0,0,0.2)",
+                                                        value: item.allergyValue,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemAllergy, $$event.target.value, i);
                                                           }),
@@ -1683,7 +1683,7 @@ function Carte(Props) {
                                                           downBorderColor: "rgba(255,0,0,0.6)",
                                                           borderColor: "rgba(0,0,0,0.2)",
                                                           value: item.allergyValue,
-                                                          disabled: state.showProgress || item.showDelete,
+                                                          disabled: state.showProgress || item.itemDelete,
                                                           onClick: (function (param) {
                                                               return Curry._1(showAllergyMenu, i);
                                                             }),
@@ -1753,7 +1753,7 @@ function Carte(Props) {
                                                         onDrop: (function ($$event) {
                                                             return Curry._3(dropItemAlbum, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                           }),
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onClick: chooseFile,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(uploadItemAlbum, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1784,7 +1784,7 @@ function Carte(Props) {
                                                         downBorderColor: "rgba(255,0,0,0.6)",
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         value: item.albumValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemAlbum, $$event.target.value, i);
                                                           }),
@@ -1792,25 +1792,6 @@ function Carte(Props) {
                                                       });
                                                   break;
                                               case "textarea" :
-                                                  tmp$3 = React.createElement(TextFieldOutline$BtsCore.make, {
-                                                        top: "0",
-                                                        bottom: "0",
-                                                        left: "0",
-                                                        labelColor: "rgba(255,0,0,0.8)",
-                                                        borderTop: "10",
-                                                        borderBottom: "10",
-                                                        enterBorderColor: "rgba(255,0,0,0.8)",
-                                                        downBorderColor: "rgba(255,0,0,0.6)",
-                                                        borderColor: "rgba(0,0,0,0.2)",
-                                                        value: item.albumValue,
-                                                        disabled: state.showProgress || item.showDelete,
-                                                        onChange: (function ($$event) {
-                                                            return Curry._2(changeItemAlbum, $$event.target.value, i);
-                                                          }),
-                                                        children: item.albumTitle
-                                                      });
-                                                  break;
-                                              case "textline" :
                                                   tmp$3 = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                         top: "0",
                                                         bottom: "0",
@@ -1823,7 +1804,26 @@ function Carte(Props) {
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         rows: 3,
                                                         value: item.albumValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
+                                                        onChange: (function ($$event) {
+                                                            return Curry._2(changeItemAlbum, $$event.target.value, i);
+                                                          }),
+                                                        children: item.albumTitle
+                                                      });
+                                                  break;
+                                              case "textline" :
+                                                  tmp$3 = React.createElement(TextFieldOutline$BtsCore.make, {
+                                                        top: "0",
+                                                        bottom: "0",
+                                                        left: "0",
+                                                        labelColor: "rgba(255,0,0,0.8)",
+                                                        borderTop: "10",
+                                                        borderBottom: "10",
+                                                        enterBorderColor: "rgba(255,0,0,0.8)",
+                                                        downBorderColor: "rgba(255,0,0,0.6)",
+                                                        borderColor: "rgba(0,0,0,0.2)",
+                                                        value: item.albumValue,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemAlbum, $$event.target.value, i);
                                                           }),
@@ -1841,7 +1841,7 @@ function Carte(Props) {
                                                           downBorderColor: "rgba(255,0,0,0.6)",
                                                           borderColor: "rgba(0,0,0,0.2)",
                                                           value: item.albumValue,
-                                                          disabled: state.showProgress || item.showDelete,
+                                                          disabled: state.showProgress || item.itemDelete,
                                                           onClick: (function (param) {
                                                               return Curry._1(showAlbumMenu, i);
                                                             }),
@@ -1911,7 +1911,7 @@ function Carte(Props) {
                                                         onDrop: (function ($$event) {
                                                             return Curry._3(dropItemRemark, $$event, Caml_array.caml_array_get($$event.nativeEvent.dataTransfer.files, 0), i);
                                                           }),
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onClick: chooseFile,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(uploadItemRemark, Caml_array.caml_array_get($$event.target.files, 0), i);
@@ -1942,7 +1942,7 @@ function Carte(Props) {
                                                         downBorderColor: "rgba(255,0,0,0.6)",
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         value: item.remarkValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemRemark, $$event.target.value, i);
                                                           }),
@@ -1950,25 +1950,6 @@ function Carte(Props) {
                                                       });
                                                   break;
                                               case "textarea" :
-                                                  tmp$4 = React.createElement(TextFieldOutline$BtsCore.make, {
-                                                        top: "0",
-                                                        bottom: "0",
-                                                        left: "0",
-                                                        labelColor: "rgba(255,0,0,0.8)",
-                                                        borderTop: "10",
-                                                        borderBottom: "10",
-                                                        enterBorderColor: "rgba(255,0,0,0.8)",
-                                                        downBorderColor: "rgba(255,0,0,0.6)",
-                                                        borderColor: "rgba(0,0,0,0.2)",
-                                                        value: item.remarkValue,
-                                                        disabled: state.showProgress || item.showDelete,
-                                                        onChange: (function ($$event) {
-                                                            return Curry._2(changeItemRemark, $$event.target.value, i);
-                                                          }),
-                                                        children: item.remarkTitle
-                                                      });
-                                                  break;
-                                              case "textline" :
                                                   tmp$4 = React.createElement(TextFieldMultiline$BtsCore.make, {
                                                         top: "0",
                                                         bottom: "0",
@@ -1981,7 +1962,26 @@ function Carte(Props) {
                                                         borderColor: "rgba(0,0,0,0.2)",
                                                         rows: 3,
                                                         value: item.remarkValue,
-                                                        disabled: state.showProgress || item.showDelete,
+                                                        disabled: state.showProgress || item.itemDelete,
+                                                        onChange: (function ($$event) {
+                                                            return Curry._2(changeItemRemark, $$event.target.value, i);
+                                                          }),
+                                                        children: item.remarkTitle
+                                                      });
+                                                  break;
+                                              case "textline" :
+                                                  tmp$4 = React.createElement(TextFieldOutline$BtsCore.make, {
+                                                        top: "0",
+                                                        bottom: "0",
+                                                        left: "0",
+                                                        labelColor: "rgba(255,0,0,0.8)",
+                                                        borderTop: "10",
+                                                        borderBottom: "10",
+                                                        enterBorderColor: "rgba(255,0,0,0.8)",
+                                                        downBorderColor: "rgba(255,0,0,0.6)",
+                                                        borderColor: "rgba(0,0,0,0.2)",
+                                                        value: item.remarkValue,
+                                                        disabled: state.showProgress || item.itemDelete,
                                                         onChange: (function ($$event) {
                                                             return Curry._2(changeItemRemark, $$event.target.value, i);
                                                           }),
@@ -1999,7 +1999,7 @@ function Carte(Props) {
                                                           downBorderColor: "rgba(255,0,0,0.6)",
                                                           borderColor: "rgba(0,0,0,0.2)",
                                                           value: item.remarkValue,
-                                                          disabled: state.showProgress || item.showDelete,
+                                                          disabled: state.showProgress || item.itemDelete,
                                                           onClick: (function (param) {
                                                               return Curry._1(showRemarkMenu, i);
                                                             }),
@@ -2201,7 +2201,7 @@ function Carte(Props) {
                                                                                                         width: "28",
                                                                                                         height: "28",
                                                                                                         animation: "leftRight",
-                                                                                                        src: item.showDelete ? Icons$BtsCore.refreshBlack : Icons$BtsCore.clearWarn
+                                                                                                        src: item.itemDelete ? Icons$BtsCore.refreshBlack : Icons$BtsCore.clearWarn
                                                                                                       })
                                                                                                 }), React.createElement(GridItem$BtsCore.make, {
                                                                                                   top: "0",
@@ -2213,7 +2213,7 @@ function Carte(Props) {
                                                                                                   xs: "no",
                                                                                                   children: React.createElement(Typography$BtsCore.make, {
                                                                                                         variant: "subheading",
-                                                                                                        children: item.showDelete ? React.createElement(ReactIntl.FormattedMessage, {
+                                                                                                        children: item.itemDelete ? React.createElement(ReactIntl.FormattedMessage, {
                                                                                                                 id: "refresh",
                                                                                                                 defaultMessage: "Refresh"
                                                                                                               }) : React.createElement(ReactIntl.FormattedMessage, {

@@ -179,8 +179,8 @@ let initialState = {
   |],
   qaitems: [|
     {icon: shortTextBlack, value: "text"},
-    {icon: notesBlack, value: "textarea"},
-    {icon: menuBlack, value: "textline"},
+    {icon: notesBlack, value: "textline"},
+    {icon: menuBlack, value: "textarea"},
     {icon: radioButtonCheckedBlack, value: "radio"},
     {icon: checkBoxBlack, value: "checkbox"},
     {icon: arrowDownBlack, value: "droplist"},
@@ -252,7 +252,9 @@ let make = _ => {
 
   let insertAJax = () =>
     Js.Promise.(
-      iIconData(state.items, state.qaitems, "newid" |> Locals.select)
+      "newid"
+      |> Locals.select
+      |> iIconData(state.items, state.qaitems)
       |> Axiosapi.Icon.insert
       |> then_(response => {
            {

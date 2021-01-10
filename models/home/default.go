@@ -139,7 +139,7 @@ func GetPingItemModels(sPChatData models.SPChatData) *models.SOptionModels {
 			_, err = o.Raw("call foodinfo.searchmenuing(?, ?)", loadCall).Values(&mainRows)
 			datetime := appcode.GetDateTime()
 			for _, main := range mainRows {
-				items = append(items, map[string]interface{}{"id": main["formId"].(string) + "#" + main["ctId"].(string), "fstName": appcode.Substring(main["username"].(string), 0, 1), "content": main["content"], "datetime": appcode.GetDaysOrHours(main["indate"].(string)+" "+main["intime"].(string), datetime), "name": main["username"], "showDelete": main["inoper"] == sPChatData.Newid, "showEnter": false})
+				items = append(items, map[string]interface{}{"id": main["formId"].(string) + "#" + main["ctId"].(string), "fstName": appcode.Substring(main["username"].(string), 0, 1), "content": main["content"], "datetime": appcode.GetDaysOrHours(main["indate"].(string)+" "+main["intime"].(string), datetime), "name": main["username"], "itemDelete": main["inoper"] == sPChatData.Newid, "showEnter": false})
 			}
 			isbreak = false
 		}
@@ -185,7 +185,7 @@ func GetPingChatModels(sPChatData models.SPChatData) *models.SOptionModels {
 			_, err = o.Raw("call foodinfo.searchchating(?, ?)", loadCall).Values(&mainRows)
 			datetime := appcode.GetDateTime()
 			for _, main := range mainRows {
-				items = append(items, map[string]interface{}{"id": main["formId"].(string) + "#" + main["ctId"].(string), "fstName": appcode.Substring(main["username"].(string), 0, 1), "content": main["content"], "datetime": appcode.GetDaysOrHours(main["indate"].(string)+" "+main["intime"].(string), datetime), "name": main["username"], "showDelete": main["inoper"] == sPChatData.Newid, "showEnter": false})
+				items = append(items, map[string]interface{}{"id": main["formId"].(string) + "#" + main["ctId"].(string), "fstName": appcode.Substring(main["username"].(string), 0, 1), "content": main["content"], "datetime": appcode.GetDaysOrHours(main["indate"].(string)+" "+main["intime"].(string), datetime), "name": main["username"], "itemDelete": main["inoper"] == sPChatData.Newid, "showEnter": false})
 			}
 			isbreak = false
 		}
@@ -219,7 +219,7 @@ func GetSChatModels(sPChatData models.SPChatData) *models.SItemModels {
 	datetime := appcode.GetDateTime()
 	items := []map[string]interface{}{}
 	for _, main := range mainRows {
-		items = append(items, map[string]interface{}{"id": main["formId"].(string) + "#" + main["ctId"].(string), "fstName": appcode.Substring(main["username"].(string), 0, 1), "content": main["content"], "datetime": appcode.GetDaysOrHours(main["indate"].(string)+" "+main["intime"].(string), datetime), "name": main["username"], "showDelete": main["inoper"] == sPChatData.Newid, "showEnter": false})
+		items = append(items, map[string]interface{}{"id": main["formId"].(string) + "#" + main["ctId"].(string), "fstName": appcode.Substring(main["username"].(string), 0, 1), "content": main["content"], "datetime": appcode.GetDaysOrHours(main["indate"].(string)+" "+main["intime"].(string), datetime), "name": main["username"], "itemDelete": main["inoper"] == sPChatData.Newid, "showEnter": false})
 	}
 	return &models.SItemModels{Items: items, Status: "istrue"}
 }

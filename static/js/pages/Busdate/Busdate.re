@@ -11,6 +11,12 @@ open SwitchColor;
 open IconAnimation;
 [%bs.raw {|require('../../../scss/pages/Together/together.scss')|}];
 
+type answeritem = {
+  id: int,
+  value: string,
+  showAnswer: bool,
+};
+
 type item = {
   wkId: int,
   weekId: string,
@@ -22,6 +28,7 @@ type item = {
   weekValue: string,
   showWeekMenu: bool,
   weekitems: array(optionitem),
+  weekanswitems: array(answeritem),
   sttimeId: string,
   showSttime: bool,
   sttimeOutValue: string,
@@ -41,9 +48,9 @@ type item = {
   showEntimeMenu: bool,
   entimeitems: array(optionitem),
   showMore: bool,
-  showDelete: bool,
-  showModify: bool,
-  showCreate: bool,
+  itemDelete: bool,
+  itemModify: bool,
+  itemCreate: bool,
 };
 
 type state = {
@@ -159,7 +166,7 @@ let reducer = (state, action) =>
                 ...item,
                 weekValue: value,
                 showWeekFile: !item.showWeekFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -170,7 +177,7 @@ let reducer = (state, action) =>
       items:
         Array.mapi(
           (i, item) =>
-            index == i ? {...item, weekValue: value, showModify: true} : item,
+            index == i ? {...item, weekValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -193,7 +200,7 @@ let reducer = (state, action) =>
                 ...item,
                 weekValue: value,
                 showWeekMenu: !item.showWeekMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -217,7 +224,7 @@ let reducer = (state, action) =>
                 ...item,
                 sttimeValue: value,
                 showSttimeFile: !item.showSttimeFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -229,7 +236,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, sttimeValue: value, showModify: true} : item,
+              ? {...item, sttimeValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -253,7 +260,7 @@ let reducer = (state, action) =>
                 ...item,
                 sttimeValue: value,
                 showSttimeMenu: !item.showSttimeMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -277,7 +284,7 @@ let reducer = (state, action) =>
                 ...item,
                 entimeValue: value,
                 showEntimeFile: !item.showEntimeFile,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -289,7 +296,7 @@ let reducer = (state, action) =>
         Array.mapi(
           (i, item) =>
             index == i
-              ? {...item, entimeValue: value, showModify: true} : item,
+              ? {...item, entimeValue: value, itemModify: true} : item,
           state.items,
         ),
     }
@@ -313,7 +320,7 @@ let reducer = (state, action) =>
                 ...item,
                 entimeValue: value,
                 showEntimeMenu: !item.showEntimeMenu,
-                showModify: true,
+                itemModify: true,
               }
               : item,
           state.items,
@@ -333,7 +340,7 @@ let reducer = (state, action) =>
       items:
         Array.mapi(
           (i, item) =>
-            index == i ? {...item, showDelete: !item.showDelete} : item,
+            index == i ? {...item, itemDelete: !item.itemDelete} : item,
           state.items,
         ),
     }
@@ -341,7 +348,7 @@ let reducer = (state, action) =>
       ...state,
       items:
         Js_array.filter(
-          (item: item) => item.showDelete !== true,
+          (item: item) => item.itemDelete !== true,
           state.items,
         ),
     }
@@ -748,7 +755,7 @@ let make = _ => {
         state.desc,
         Js_array.filter(
           (item: item) =>
-            item.showModify === true || item.showDelete === true,
+            item.itemModify === true || item.itemDelete === true,
           state.items,
         ),
         "newid" |> Locals.select,
@@ -951,7 +958,7 @@ let make = _ => {
                                         )
                                    }
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onClick=chooseFile
                                    onChange={event =>
@@ -973,7 +980,7 @@ let make = _ => {
                                    borderColor="rgba(0,0,0,0.2)"
                                    value={item.weekValue}
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onChange={event =>
                                      i
@@ -983,7 +990,7 @@ let make = _ => {
                                    }>
                                    null
                                  </TextFieldOutline>
-                               | "textarea" =>
+                               | "textline" =>
                                  <TextFieldOutline
                                    top="0"
                                    left="0"
@@ -994,7 +1001,7 @@ let make = _ => {
                                    borderColor="rgba(0,0,0,0.2)"
                                    value={item.weekValue}
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onChange={event =>
                                      i
@@ -1004,6 +1011,30 @@ let make = _ => {
                                    }>
                                    null
                                  </TextFieldOutline>
+                               | "textarea" =>
+                                 <TextFieldMultiline
+                                   top="0"
+                                   bottom="0"
+                                   left="0"
+                                   labelColor="rgba(255,0,0,0.8)"
+                                   borderTop="10"
+                                   borderBottom="10"
+                                   enterBorderColor="rgba(255,0,0,0.8)"
+                                   downBorderColor="rgba(255,0,0,0.6)"
+                                   borderColor="rgba(0,0,0,0.2)"
+                                   rows=3
+                                   value={item.weekValue}
+                                   disabled={
+                                     state.showProgress || item.itemDelete
+                                   }
+                                   onChange={event =>
+                                     i
+                                     |> changeItemWeek(
+                                          ReactEvent.Form.target(event)##value,
+                                        )
+                                   }>
+                                   null
+                                 </TextFieldMultiline>
                                | _ =>
                                  <>
                                    <SelectOutline
@@ -1014,7 +1045,7 @@ let make = _ => {
                                      borderColor="rgba(0,0,0,0.2)"
                                      value={item.weekValue}
                                      disabled={
-                                       state.showProgress || item.showDelete
+                                       state.showProgress || item.itemDelete
                                      }
                                      onClick={_ => i |> showWeekMenu}>
                                      ...(
@@ -1116,7 +1147,7 @@ let make = _ => {
                                         )
                                    }
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onClick=chooseFile
                                    onChange={event =>
@@ -1138,7 +1169,7 @@ let make = _ => {
                                    borderColor="rgba(0,0,0,0.2)"
                                    value={item.sttimeValue}
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onChange={event =>
                                      i
@@ -1148,7 +1179,7 @@ let make = _ => {
                                    }>
                                    null
                                  </TextFieldOutline>
-                               | "textarea" =>
+                               | "textline" =>
                                  <TextFieldOutline
                                    top="0"
                                    left="0"
@@ -1159,7 +1190,7 @@ let make = _ => {
                                    borderColor="rgba(0,0,0,0.2)"
                                    value={item.sttimeValue}
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onChange={event =>
                                      i
@@ -1169,6 +1200,30 @@ let make = _ => {
                                    }>
                                    null
                                  </TextFieldOutline>
+                               | "textarea" =>
+                                 <TextFieldMultiline
+                                   top="0"
+                                   bottom="0"
+                                   left="0"
+                                   labelColor="rgba(255,0,0,0.8)"
+                                   borderTop="10"
+                                   borderBottom="10"
+                                   enterBorderColor="rgba(255,0,0,0.8)"
+                                   downBorderColor="rgba(255,0,0,0.6)"
+                                   borderColor="rgba(0,0,0,0.2)"
+                                   rows=3
+                                   value={item.sttimeValue}
+                                   disabled={
+                                     state.showProgress || item.itemDelete
+                                   }
+                                   onChange={event =>
+                                     i
+                                     |> changeItemSttime(
+                                          ReactEvent.Form.target(event)##value,
+                                        )
+                                   }>
+                                   null
+                                 </TextFieldMultiline>
                                | _ =>
                                  <>
                                    <SelectOutline
@@ -1179,7 +1234,7 @@ let make = _ => {
                                      borderColor="rgba(0,0,0,0.2)"
                                      value={item.sttimeValue}
                                      disabled={
-                                       state.showProgress || item.showDelete
+                                       state.showProgress || item.itemDelete
                                      }
                                      onClick={_ => i |> showSttimeMenu}>
                                      ...(
@@ -1282,7 +1337,7 @@ let make = _ => {
                                         )
                                    }
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onClick=chooseFile
                                    onChange={event =>
@@ -1304,7 +1359,7 @@ let make = _ => {
                                    borderColor="rgba(0,0,0,0.2)"
                                    value={item.entimeValue}
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onChange={event =>
                                      i
@@ -1314,7 +1369,7 @@ let make = _ => {
                                    }>
                                    null
                                  </TextFieldOutline>
-                               | "textarea" =>
+                               | "textline" =>
                                  <TextFieldOutline
                                    top="0"
                                    left="0"
@@ -1325,7 +1380,7 @@ let make = _ => {
                                    borderColor="rgba(0,0,0,0.2)"
                                    value={item.entimeValue}
                                    disabled={
-                                     state.showProgress || item.showDelete
+                                     state.showProgress || item.itemDelete
                                    }
                                    onChange={event =>
                                      i
@@ -1335,6 +1390,30 @@ let make = _ => {
                                    }>
                                    null
                                  </TextFieldOutline>
+                               | "textarea" =>
+                                 <TextFieldMultiline
+                                   top="0"
+                                   bottom="0"
+                                   left="0"
+                                   labelColor="rgba(255,0,0,0.8)"
+                                   borderTop="10"
+                                   borderBottom="10"
+                                   enterBorderColor="rgba(255,0,0,0.8)"
+                                   downBorderColor="rgba(255,0,0,0.6)"
+                                   borderColor="rgba(0,0,0,0.2)"
+                                   rows=3
+                                   value={item.entimeValue}
+                                   disabled={
+                                     state.showProgress || item.itemDelete
+                                   }
+                                   onChange={event =>
+                                     i
+                                     |> changeItemEntime(
+                                          ReactEvent.Form.target(event)##value,
+                                        )
+                                   }>
+                                   null
+                                 </TextFieldMultiline>
                                | _ =>
                                  <>
                                    <SelectOutline
@@ -1345,7 +1424,7 @@ let make = _ => {
                                      borderColor="rgba(0,0,0,0.2)"
                                      value={item.entimeValue}
                                      disabled={
-                                       state.showProgress || item.showDelete
+                                       state.showProgress || item.itemDelete
                                      }
                                      onClick={_ => i |> showEntimeMenu}>
                                      ...(
@@ -1538,7 +1617,7 @@ let make = _ => {
                                            height="28"
                                            animation="leftRight"
                                            src={
-                                             item.showDelete
+                                             item.itemDelete
                                                ? refreshBlack : deleteBlack
                                            }
                                          />
@@ -1552,7 +1631,7 @@ let make = _ => {
                                          backgroundColor="transparent"
                                          xs="no">
                                          <Typography variant="subheading">
-                                           {item.showDelete
+                                           {item.itemDelete
                                               ? <FormattedMessage
                                                   id="refresh"
                                                   defaultMessage="Refresh"

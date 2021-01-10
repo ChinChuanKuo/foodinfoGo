@@ -14,7 +14,7 @@ type chatitem = {
   content: string,
   datetime: string,
   name: string,
-  showDelete: bool,
+  itemDelete: bool,
   showEnter: bool,
 };
 
@@ -860,7 +860,7 @@ let make = _ => {
                                    </GridItem>
                                    {switch (
                                       chatitem.showEnter,
-                                      chatitem.showDelete,
+                                      chatitem.itemDelete,
                                     ) {
                                     | (true, true) =>
                                       <GridItem

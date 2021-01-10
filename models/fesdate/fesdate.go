@@ -85,14 +85,14 @@ func GetSearchModels(dFormData models.DFormData) *models.SInfoModels {
 				entimeitems = append(entimeitems, map[string]interface{}{"optionPadding": false, "value": option["value"]})
 			}
 		}
-		items = append(items, map[string]interface{}{"daId": feitem["daId"], "festId": festRows[0]["feId"], "showFest": true, "festOutValue": festRows[0]["outValue"], "festChecked": festRows[0]["checked"] == "1", "showFestDrop": false, "showFestFile": feitem["fest"] != "", "festValue": feitem["fest"], "showFestMenu": false, "festitems": festitems, "dateId": festRows[1]["feId"], "showDate": true, "dateOutValue": festRows[1]["outValue"], "dateChecked": festRows[1]["checked"] == "1", "showDateDrop": false, "showDateFile": feitem["date"] != "", "dateValue": feitem["date"], "showDateMenu": false, "dateitems": dateitems, "sttimeId": festRows[2]["feId"], "showSttime": true, "sttimeOutValue": festRows[2]["outValue"], "sttimeChecked": festRows[2]["checked"] == "1", "showSttimeDrop": false, "showSttimeFile": feitem["sttime"] != "", "sttimeValue": feitem["sttime"], "showSttimeMenu": false, "sttimeitems": sttimeitems, "entimeId": festRows[3]["feId"], "showEntime": true, "entimeOutValue": festRows[3]["outValue"], "entimeChecked": festRows[3]["checked"] == "1", "showEntimeDrop": false, "showEntimeFile": feitem["entime"] != "", "entimeValue": feitem["entime"], "showEntimeMenu": false, "entimeitems": entimeitems, "showEnter": false, "showModify": false})
+		items = append(items, map[string]interface{}{"daId": feitem["daId"], "festId": festRows[0]["feId"], "showFest": true, "festOutValue": festRows[0]["outValue"], "festChecked": festRows[0]["checked"] == "1", "showFestDrop": false, "showFestFile": feitem["fest"] != "", "festValue": feitem["fest"], "showFestMenu": false, "festitems": festitems, "dateId": festRows[1]["feId"], "showDate": true, "dateOutValue": festRows[1]["outValue"], "dateChecked": festRows[1]["checked"] == "1", "showDateDrop": false, "showDateFile": feitem["date"] != "", "dateValue": feitem["date"], "showDateMenu": false, "dateitems": dateitems, "sttimeId": festRows[2]["feId"], "showSttime": true, "sttimeOutValue": festRows[2]["outValue"], "sttimeChecked": festRows[2]["checked"] == "1", "showSttimeDrop": false, "showSttimeFile": feitem["sttime"] != "", "sttimeValue": feitem["sttime"], "showSttimeMenu": false, "sttimeitems": sttimeitems, "entimeId": festRows[3]["feId"], "showEntime": true, "entimeOutValue": festRows[3]["outValue"], "entimeChecked": festRows[3]["checked"] == "1", "showEntimeDrop": false, "showEntimeFile": feitem["entime"] != "", "entimeValue": feitem["entime"], "showEntimeMenu": false, "entimeitems": entimeitems, "showEnter": false, "itemModify": false})
 	}
 	return &models.SInfoModels{Formid: mainRows[0]["formId"].(string), Tile: mainRows[0]["tile"].(string), Desc: mainRows[0]["desc"].(string), Checked: mainRows[0]["status"] == "1", Heads: heads, Items: items, Status: "istrue"}
 }
 
 func GetInsertModels(iFormData models.IFormData) *models.StatusModels {
 	for _, items := range iFormData.Items {
-		if items["showDelete"] == false {
+		if items["itemDelete"] == false {
 			wrong := appcode.Chkarraystring(items["festOutValue"].(string), items["festChecked"].(bool), items["daId"].(string), items["festValue"].(string))
 			if wrong != "" {
 				return &models.StatusModels{Status: wrong}

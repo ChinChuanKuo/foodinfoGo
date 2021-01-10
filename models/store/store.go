@@ -38,7 +38,7 @@ func GetSearchModels(dFormData models.DFormData) *models.SFormsModels {
 		return &models.SFormsModels{Status: "nodata"}
 	}
 	typeitems := []map[string]interface{}{}
-	if moduleRows[0]["outValue"] == "radio" || moduleRows[0]["outValue"] == "checkbox" || moduleRows[0]["outValue"] == "droplist" {
+	if moduleRows[0]["outValue"] == "droplist" {
 		var optionRows []orm.Params
 		loadCall = []interface{}{moduleRows[0]["stId"]}
 		results, _ = o.Raw("call foodinfo.searchstoptionform(?)", loadCall).Values(&optionRows)
@@ -46,8 +46,17 @@ func GetSearchModels(dFormData models.DFormData) *models.SFormsModels {
 			typeitems = append(typeitems, map[string]interface{}{"optionPadding": false, "value": option["value"]})
 		}
 	}
+	typeanswitems := []map[string]interface{}{}
+	if moduleRows[0]["outValue"] == "radio" || moduleRows[0]["outValue"] == "checkbox" {
+		var optionRows []orm.Params
+		loadCall = []interface{}{moduleRows[0]["stId"]}
+		results, _ = o.Raw("call foodinfo.searchstoptionform(?)", loadCall).Values(&optionRows)
+		for _, option := range optionRows {
+			typeanswitems = append(typeanswitems, map[string]interface{}{"id": option["id"], "value": option["value"], "showAnswer": false})
+		}
+	}
 	phoneitems := []map[string]interface{}{}
-	if moduleRows[1]["outValue"] == "radio" || moduleRows[1]["outValue"] == "checkbox" || moduleRows[1]["outValue"] == "droplist" {
+	if moduleRows[1]["outValue"] == "droplist" {
 		var optionRows []orm.Params
 		loadCall = []interface{}{moduleRows[1]["stId"]}
 		results, _ = o.Raw("call foodinfo.searchstoptionform(?)", loadCall).Values(&optionRows)
@@ -55,17 +64,35 @@ func GetSearchModels(dFormData models.DFormData) *models.SFormsModels {
 			phoneitems = append(phoneitems, map[string]interface{}{"optionPadding": false, "value": option["value"]})
 		}
 	}
-	addressitems := []map[string]interface{}{}
-	if moduleRows[2]["outValue"] == "radio" || moduleRows[2]["outValue"] == "checkbox" || moduleRows[2]["outValue"] == "droplist" {
+	phoneanswitems := []map[string]interface{}{}
+	if moduleRows[1]["outValue"] == "radio" || moduleRows[1]["outValue"] == "checkbox" {
+		var optionRows []orm.Params
+		loadCall = []interface{}{moduleRows[1]["stId"]}
+		results, _ = o.Raw("call foodinfo.searchstoptionform(?)", loadCall).Values(&optionRows)
+		for _, option := range optionRows {
+			phoneanswitems = append(phoneanswitems, map[string]interface{}{"id": option["id"], "value": option["value"], "showAnswer": false})
+		}
+	}
+	addritems := []map[string]interface{}{}
+	if moduleRows[2]["outValue"] == "droplist" {
 		var optionRows []orm.Params
 		loadCall = []interface{}{moduleRows[2]["stId"]}
 		results, _ = o.Raw("call foodinfo.searchstoptionform(?)", loadCall).Values(&optionRows)
 		for _, option := range optionRows {
-			addressitems = append(addressitems, map[string]interface{}{"optionPadding": false, "value": option["value"]})
+			addritems = append(addritems, map[string]interface{}{"optionPadding": false, "value": option["value"]})
+		}
+	}
+	addranswitems := []map[string]interface{}{}
+	if moduleRows[2]["outValue"] == "radio" || moduleRows[2]["outValue"] == "checkbox" {
+		var optionRows []orm.Params
+		loadCall = []interface{}{moduleRows[2]["stId"]}
+		results, _ = o.Raw("call foodinfo.searchstoptionform(?)", loadCall).Values(&optionRows)
+		for _, option := range optionRows {
+			addranswitems = append(addranswitems, map[string]interface{}{"id": option["id"], "value": option["value"], "showAnswer": false})
 		}
 	}
 	items := []map[string]interface{}{}
-	items = append(items, map[string]interface{}{"typeId": moduleRows[0]["stId"], "showType": true, "typeOutValue": moduleRows[0]["outValue"], "typeChecked": moduleRows[0]["checked"] == "1", "showTypeDrop": false, "showTypeFile": mainRows[0]["type"] != "", "typeTitle": moduleRows[0]["tile"], "typeValue": mainRows[0]["type"], "showTypeMenu": false, "typeitems": typeitems, "phoneId": moduleRows[1]["stId"], "showPhone": true, "phoneOutValue": moduleRows[1]["outValue"], "phoneChecked": moduleRows[1]["checked"] == "1", "showPhoneDrop": false, "showPhoneFile": mainRows[0]["phone"] != "", "phoneTitle": moduleRows[1]["tile"], "phoneValue": mainRows[0]["phone"], "showPhoneMenu": false, "phoneitems": phoneitems, "addressId": moduleRows[2]["stId"], "showAddress": true, "addressOutValue": moduleRows[2]["outValue"], "addressChecked": moduleRows[2]["checked"] == "1", "showAddressDrop": false, "showAddressFile": mainRows[0]["address"] != "", "addressTitle": moduleRows[2]["tile"], "addressValue": mainRows[0]["address"], "showAddressMenu": false, "addressitems": addressitems})
+	items = append(items, map[string]interface{}{"typeId": moduleRows[0]["stId"], "showType": true, "typeOutValue": moduleRows[0]["outValue"], "typeChecked": moduleRows[0]["checked"] == "1", "showTypeDrop": false, "showTypeFile": mainRows[0]["type"] != "", "typeTitle": moduleRows[0]["tile"], "typeValue": mainRows[0]["type"], "showTypeMenu": false, "typeitems": typeitems, "typeanswitems": typeanswitems, "phoneId": moduleRows[1]["stId"], "showPhone": true, "phoneOutValue": moduleRows[1]["outValue"], "phoneChecked": moduleRows[1]["checked"] == "1", "showPhoneDrop": false, "showPhoneFile": mainRows[0]["phone"] != "", "phoneTitle": moduleRows[1]["tile"], "phoneValue": mainRows[0]["phone"], "showPhoneMenu": false, "phoneitems": phoneitems, "phoneanswitems": phoneanswitems, "addrId": moduleRows[2]["stId"], "showAddr": true, "addrOutValue": moduleRows[2]["outValue"], "addrChecked": moduleRows[2]["checked"] == "1", "showAddrDrop": false, "showAddrFile": mainRows[0]["address"] != "", "addrTitle": moduleRows[2]["tile"], "addrValue": mainRows[0]["address"], "showAddrMenu": false, "addritems": addritems, "addranswitems": addranswitems})
 	return &models.SFormsModels{Formid: mainRows[0]["formId"].(string), Tile: mainRows[0]["tile"].(string), Desc: mainRows[0]["desc"].(string), Checked: mainRows[0]["status"] == "1", Items: items, Status: "istrue"}
 }
 
@@ -79,7 +106,7 @@ func GetInsertModels(iFormData models.IFormData) *models.StatusModels {
 		if wrong != "" {
 			return &models.StatusModels{Status: wrong}
 		}
-		wrong = appcode.Chkarraystring(items["addressOutValue"].(string), items["addressChecked"].(bool), items["addressTitle"].(string), items["addressValue"].(string))
+		wrong = appcode.Chkarraystring(items["addrOutValue"].(string), items["addrChecked"].(bool), items["addrTitle"].(string), items["addrValue"].(string))
 		if wrong != "" {
 			return &models.StatusModels{Status: wrong}
 		}
@@ -102,9 +129,9 @@ func GetInsertModels(iFormData models.IFormData) *models.StatusModels {
 			return &models.StatusModels{Status: "error"}
 		}
 	}
-	location := appcode.GetLocation(iFormData.Items[0]["addressValue"].(string))
-	if mainRows[0]["type"] != iFormData.Items[0]["typeValue"] || mainRows[0]["phone"] != iFormData.Items[0]["phoneValue"] || mainRows[0]["address"] != iFormData.Items[0]["addressValue"] || mainRows[0]["longitude"] != location[0] || mainRows[0]["latitude"] != location[1] {
-		saveExec := []interface{}{iFormData.Items[0]["typeValue"], iFormData.Items[0]["phoneValue"], iFormData.Items[0]["addressValue"], location[0], location[1], iFormData.Newid, iFormData.Formid, iFormData.Newid}
+	location := appcode.GetLocation(iFormData.Items[0]["addrValue"].(string))
+	if mainRows[0]["type"] != iFormData.Items[0]["typeValue"] || mainRows[0]["phone"] != iFormData.Items[0]["phoneValue"] || mainRows[0]["address"] != iFormData.Items[0]["addrValue"] || mainRows[0]["longitude"] != location[0] || mainRows[0]["latitude"] != location[1] {
+		saveExec := []interface{}{iFormData.Items[0]["typeValue"], iFormData.Items[0]["phoneValue"], iFormData.Items[0]["addrValue"], location[0], location[1], iFormData.Newid, iFormData.Formid, iFormData.Newid}
 		_, err := o.Raw("update foodinfo.stsubform set type = ?,phone = ?,address = ?,longitude = ?,latitude = ?,mooper = ? where formId = ? and inoper = ?", saveExec).Exec()
 		if err != nil {
 			return &models.StatusModels{Status: "error"}

@@ -23,7 +23,7 @@ type state = {
   menuPath: string,
   tabitems: list(tabtitem),
   index: int,
-  showCreate: bool,
+  itemCreate: bool,
   badge: string,
   showBadge: bool,
   beforeLoad: bool,
@@ -80,7 +80,7 @@ let reducer = (state, action) =>
         ),
       index,
     }
-  | ShowCreate => {...state, showCreate: !state.showCreate}
+  | ShowCreate => {...state, itemCreate: !state.itemCreate}
   | ClickBadgeItems(showItemBadge, badgeitems) => {
       ...state,
       showItemBadge,
@@ -109,7 +109,7 @@ let initialState = {
     {showTabt: false, tabImage: homeBlack, tabPath: homePath},
   ],
   index: 0,
-  showCreate: false,
+  itemCreate: false,
   badge: "",
   showBadge: false,
   beforeLoad: true,
@@ -315,7 +315,7 @@ let make = (~autoPath: 'a, ~children) => {
       |> ignore
     );
   let storeForm = useCallback(_ => storeAJax());
-  let showCreate = useCallback(_ => ShowCreate |> dispatch);
+  let itemCreate = useCallback(_ => ShowCreate |> dispatch);
   let createForm = useCallback(_ => ShowCreate |> dispatch);
   let badgeAJax = () =>
     Js.Promise.(
@@ -493,7 +493,7 @@ let make = (~autoPath: 'a, ~children) => {
                 style=butnRight
                 padding="8"
                 className="butnToolAction"
-                onClick=showCreate>
+                onClick=itemCreate>
                 <Tooltip location="bottom" backgroundColor="rgba(255,0,0,0.8)">
                   <FormattedMessage id="create" defaultMessage="Create" />
                 </Tooltip>
@@ -503,8 +503,8 @@ let make = (~autoPath: 'a, ~children) => {
                   src=addBlack
                 />
               </IconButton>
-              {state.showCreate
-                 ? <NewBookCreate maxHeight createForm clickShow=showCreate />
+              {state.itemCreate
+                 ? <NewBookCreate maxHeight createForm clickShow=itemCreate />
                  : null}
             </GridItem>
             <GridItem top="0" right="0" bottom="0" left="0" xs="no">

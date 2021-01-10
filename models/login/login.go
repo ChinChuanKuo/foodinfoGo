@@ -51,23 +51,10 @@ func GetLoginModels(loginData models.LoginData, userAgent string) *models.LoginM
 	if loginRows[0]["isused"] == "1" {
 		var checkRows []orm.Params
 		infolist := appcode.GetInfoObject()
-		loginCall := []interface{}{loginData.Userid, password, infolist.ExternIp, "1"}
-		results, _ := o.Raw("call foodinfo.checksitelog(?, ?, ?, ?)", loginCall).Values(&checkRows)
+		loginCall := []interface{}{loginRows[0]["newid"], infolist.ExternIp, loginData.Longitude, loginData.Latitude, "", "", infolist.CPU, infolist.InternIp, infolist.Hostname, appcode.GetBrowser(userAgent), infolist.OS, "1"}
+		results, _ := o.Raw("call foodinfo.checksitelog(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", loginCall).Values(&checkRows)
 		if results == 0 {
-			loginExec := []interface{}{loginRows[0]["newid"], infolist.ExternIp, loginData.Longitude, loginData.Latitude, "", "", infolist.CPU, infolist.InternIp, infolist.Hostname, appcode.GetBrowser(userAgent), infolist.OS, "1"}
-			_, err := o.Raw("insert into foodinfo.sitelog (newid,externip,longitude,latitude,country,city,cpu,internip,hostname,browser,os,islogin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", loginExec).Exec()
-			if err == nil {
-				return &models.LoginModels{Newid: loginRows[0]["newid"].(string), Name: appcode.Substring(loginRows[0]["username"].(string), 0, 1), Allname: loginRows[0]["username"].(string), Status: "istrue"}
-			}
-			return &models.LoginModels{Status: "error"}
-		}
-		if checkRows[0]["isused"] == "1" && checkRows[0]["islogin"] == "1" {
-			loginExec := []interface{}{loginData.Longitude, loginData.Latitude, infolist.CPU, infolist.InternIp, infolist.Hostname, appcode.GetBrowser(userAgent), infolist.OS, checkRows[0]["newid"], infolist.ExternIp, "1"}
-			_, err := o.Raw("update foodinfo.sitelog set longitude = ?,latitude = ?,cpu = ?,internip = ?,hostname = ?,browser = ?,os = ? where newid = ? and externip = ? and islogin = ?", loginExec).Exec()
-			if err == nil {
-				return &models.LoginModels{Newid: checkRows[0]["newid"].(string), Name: appcode.Substring(checkRows[0]["username"].(string), 0, 1), Allname: checkRows[0]["username"].(string), Status: "istrue"}
-			}
-			return &models.LoginModels{Status: "error"}
+			return &models.LoginModels{Newid: loginRows[0]["newid"].(string), Name: appcode.Substring(loginRows[0]["username"].(string), 0, 1), Allname: loginRows[0]["username"].(string), Status: "istrue"}
 		}
 	}
 	return &models.LoginModels{Status: "islock"}
